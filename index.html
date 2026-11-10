@@ -6,238 +6,335 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Kör Sıralama">
-    <link rel="apple-touch-icon" href="https://ui-avatars.com/api/?name=KS&background=3b82f6&color=fff&size=512&font-size=0.4&bold=true">
+    <link rel="apple-touch-icon" href="https://ui-avatars.com/api/?name=KS&background=38bdf8&color=fff&size=512&font-size=0.4&bold=true">
     
-    <title>KÖR SIRALAMA PRO - 2027 (Kariyer Modu)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <title>KÖR SIRALAMA PRO - EA FC 27</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-dark: #09090b; --bg-card: #18181b; --text-main: #f8fafc; --text-muted: #a1a1aa;
-            --accent: #3b82f6; --play-color: #10b981; --bench-color: #f59e0b; --sell-color: #ef4444;
+            --bg-dark: #1e293b;
+            --bg-card: #273549;
+            --text-main: #ffffff;
+            --text-muted: #cbd5e1;
+            
+            --red: #ef4444;
+            --white: #ffffff;
+            --light-blue: #38bdf8;
+            --yellow: #f59e0b;
+            --green: #10b981;
+
+            --accent: var(--light-blue);
+            --play-color: var(--green);
+            --bench-color: var(--yellow);
+            --sell-color: var(--red);
+            
             --radius: 18px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-user-select: none; user-select: none; touch-action: manipulation; }
 
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); display: flex; justify-content: center; align-items: center; height: 100vh; width: 100vw; overflow: hidden; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
+            display: flex; justify-content: center; align-items: center; 
+            height: 100vh; height: 100dvh; width: 100vw; overflow: hidden; 
+        }
         img { pointer-events: none; }
 
         .screen {
-            background: var(--bg-card); width: 100%; max-width: 420px; height: 92vh;
-            border-radius: var(--radius); padding: 25px; display: none; flex-direction: column;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); border: 1px solid rgba(255, 255, 255, 0.08);
-            overflow-y: auto; -webkit-overflow-scrolling: touch;
+            background: var(--bg-card); 
+            width: 100%; max-width: 420px; 
+            height: 100vh; height: 100dvh;
+            border-radius: 0px; padding: 14px 16px; 
+            display: none; flex-direction: column; justify-content: space-between;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            overflow: hidden;
         }
-        .screen::-webkit-scrollbar { display: none; }
+        @media (min-height: 700px) and (min-width: 440px) {
+            .screen { height: 94dvh; border-radius: var(--radius); }
+        }
 
-        .active { display: flex; animation: fadeUp 0.3s ease-out; }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .active { display: flex; animation: fadeUp 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); flex-shrink: 0;}
-        .logo-container { font-size: 50px; color: var(--accent); margin-bottom: 5px; text-align: center; filter: drop-shadow(0px 0px 15px var(--accent)); transition: 0.3s;}
-        h1 { font-weight: 800; font-size: 28px; text-align: center; margin-bottom: 5px; letter-spacing: -1px;}
-        .subtitle { text-align: center; color: var(--text-muted); font-size: 14px; font-weight: 700; letter-spacing: 3px; margin-bottom: 25px; }
+        /* HEADER */
+        .header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); flex-shrink: 0; }
+        .logo-container { font-size: 38px; color: var(--accent); text-align: center; filter: drop-shadow(0px 0px 10px var(--accent)); transition: 0.3s; margin-bottom: 4px; }
+        h1 { font-weight: 800; font-size: 22px; text-align: center; letter-spacing: -0.5px; }
+        .subtitle { text-align: center; color: var(--text-muted); font-size: 11px; font-weight: 700; letter-spacing: 2px; margin-bottom: 10px; }
 
-        .menu-buttons, .action-buttons { display: flex; flex-direction: column; gap: 12px; width: 100%; flex-shrink: 0;}
+        .high-score-box {
+            background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 12px; padding: 8px 12px; text-align: center; margin-bottom: 12px;
+            font-size: 12px; font-weight: 700; color: var(--accent); display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
 
-        button { font-family: inherit; border: none; border-radius: 12px; padding: 16px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
-        button:active { transform: scale(0.95); }
-        .btn-primary { background: var(--accent); color: white; box-shadow: 0 4px 20px rgba(0,0,0,0.4);}
-        .btn-secondary { background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid rgba(255,255,255,0.1); }
-        .icon-btn { background: transparent; color: var(--text-muted); padding: 5px; font-size: 22px; }
+        .menu-buttons, .action-buttons { display: flex; flex-direction: column; gap: 8px; width: 100%; flex-shrink: 0; }
 
-        /* KART TASARIMLARI */
+        button { 
+            font-family: inherit; border: none; border-radius: 12px; 
+            padding: 12px 16px; font-size: 13px; font-weight: 700; 
+            cursor: pointer; display: flex; align-items: center; justify-content: center; 
+            gap: 8px; transition: all 0.2s ease; -webkit-tap-highlight-color: transparent; 
+        }
+        button:active { transform: scale(0.97); }
+        .btn-primary { background: var(--accent); color: #0f172a; box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35); font-weight: 800;}
+        .btn-secondary { background: rgba(255,255,255,0.08); color: var(--text-main); border: 1px solid rgba(255,255,255,0.12); }
+        .icon-btn { background: transparent; color: var(--text-muted); padding: 4px; font-size: 20px; }
+
+        /* OYUN KARTI VE ARKA PLAN LOGOSU */
         .player-card {
-            border-radius: 20px; padding: 20px 15px; display: flex; flex-direction: column;
-            align-items: center; justify-content: flex-start; position: relative; margin-bottom: 20px; 
-            transition: all 0.4s ease; width: 100%; height: 320px; flex-shrink: 0; overflow: hidden;
+            border-radius: 16px; padding: 12px; display: flex; flex-direction: column;
+            align-items: center; justify-content: space-between; position: relative;
+            flex: 1; min-height: 0; margin: 8px 0;
+            background: linear-gradient(160deg, #334155 0%, #1e293b 100%);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            overflow: hidden;
         }
+
+        .card-team-logo-bg {
+            position: absolute; 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            width: 250px; height: 250px;
+            opacity: 0.28; 
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3)); 
+            pointer-events: none; z-index: 1;
+            object-fit: contain;
+            display: block;
+        }
+
+        .card-top-row {
+            display: flex; justify-content: space-between; align-items: center; width: 100%; z-index: 2;
+        }
+        .team-badge-container {
+            display: flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.65);
+            padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);
+        }
+        .team-logo-img { width: 22px; height: 22px; object-fit: contain; }
+        .team-badge-text { font-size: 11px; font-weight: 700; color: #f8fafc; }
+
+        .player-image-wrap {
+            position: relative; z-index: 2; margin: 4px 0;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .player-image { 
+            width: 95px; height: 95px; border-radius: 50%; 
+            object-fit: cover; object-position: top center; 
+            border: 3px solid var(--accent); 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); 
+            background-color: #0f172a; 
+        }
+
+        .player-info { text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; z-index: 2; }
+        .player-info h2 { 
+            font-size: 17px; font-weight: 800; white-space: nowrap; 
+            overflow: hidden; text-overflow: ellipsis; width: 100%; 
+            letter-spacing: -0.3px; color: var(--white); margin-bottom: 4px;
+        }
+
+        .rating-badge { 
+            display: inline-block; background: var(--accent); color: #0f172a; 
+            padding: 3px 10px; border-radius: 6px; font-weight: 800; font-size: 13px; 
+            margin-bottom: 6px; flex-shrink: 0;
+        }
+
+        .team-pos-row { display: flex; justify-content: center; align-items: center; gap: 6px; width: 100%; }
+        .pos-badge { font-size: 10px; font-weight: 800; padding: 3px 6px; border-radius: 4px; color: white; letter-spacing: 0.5px; flex-shrink: 0;}
+        .pos-KL { background: var(--yellow); color: #000; } 
+        .pos-DF { background: var(--light-blue); color: #000; } 
+        .pos-OS { background: var(--green); color: #000; } 
+        .pos-FV { background: var(--red); color: #fff; }
+        .league-name { color: var(--text-muted); font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .btn-action { color: white; justify-content: flex-start; padding-left: 16px; font-size: 13px; font-weight: 700; height: 42px;}
+        .btn-oynat { background: var(--play-color); color: #000; } 
+        .btn-yedek { background: var(--bench-color); color: #000; } 
+        .btn-sat { background: var(--sell-color); color: #fff; }
+
+        .settings-group { margin-bottom: 10px; background: rgba(255,255,255,0.05); padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); flex-shrink: 0;}
+        .settings-group label { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; font-size: 12px; font-weight: 700; color: var(--accent); }
         
-        .card-style-klasik { background: linear-gradient(145deg, #27272a, #18181b); border: 1px solid rgba(255,255,255,0.05); box-shadow: 10px 10px 30px rgba(0,0,0,0.5); }
-        .card-style-neon { background: #000; border: 2px solid var(--accent); box-shadow: 0 0 25px var(--accent), inset 0 0 30px rgba(0,0,0,0.8); }
-        .card-style-neon .player-image { border-color: #fff; box-shadow: 0 0 20px var(--accent); }
-        .card-style-neon .team-name { color: var(--accent); text-shadow: 0 0 5px var(--accent); }
-        .card-style-cam { background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.02)); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid rgba(255,255,255,0.3); box-shadow: 0 8px 32px 0 rgba(0,0,0,0.4); }
-        .card-style-cam::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(to bottom right, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 100%); transform: rotate(30deg); pointer-events: none; z-index: 1; }
+        .color-palette { display: flex; gap: 8px; justify-content: flex-start; }
+        .color-swatch { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.2s;}
+        .color-swatch.active-color { border-color: white; transform: scale(1.15); box-shadow: 0 0 10px rgba(255,255,255,0.4); }
 
-        .league-badge { position: absolute; top: 15px; right: 15px; font-size: 22px; background: rgba(0,0,0,0.5); padding: 8px; border-radius: 50%; z-index: 5; backdrop-filter: blur(5px);}
-        .player-image { width: 135px; height: 135px; border-radius: 50%; object-fit: cover; object-position: top center; border: 4px solid var(--accent); margin-bottom: 15px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7); background-color: #111; flex-shrink: 0; z-index: 2; }
-        .player-info { text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0 5px; z-index: 2;}
-        .name-container { width: 100%; height: 28px; display: flex; justify-content: center; align-items: center; margin-bottom: 5px; }
-        .player-info h2 { font-size: 20px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; letter-spacing: -0.5px;}
-        .rating-badge { display: inline-block; background: var(--accent); color: white; padding: 5px 12px; border-radius: 8px; font-weight: 800; font-size: 14px; margin-bottom: 10px; flex-shrink: 0;}
-        .team-pos-row { display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 5px; width: 100%; height: 20px;}
-        .team-name { font-size: 14px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 75%;}
-        .pos-badge { font-size: 11px; font-weight: 800; padding: 4px 7px; border-radius: 6px; color: white; letter-spacing: 1px; flex-shrink: 0;}
-        .pos-KL { background: #eab308; } .pos-DF { background: #3b82f6; } .pos-OS { background: #10b981; } .pos-FV { background: #ef4444; }
-        .league-name { color: var(--text-muted); font-size: 12px; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; font-weight: 500;}
+        .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .cb-label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-main); font-weight: 500; cursor: pointer; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 8px;}
+        .cb-label input { width: 16px; height: 16px; accent-color: var(--accent); flex-shrink: 0;}
 
-        .btn-action { color: white; justify-content: flex-start; padding-left: 20px; font-size: 15px; font-weight: 700;}
-        .btn-oynat { background: var(--play-color); } .btn-yedek { background: var(--bench-color); } .btn-sat { background: var(--sell-color); }
-
-        .settings-group { margin-bottom: 15px; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05); flex-shrink: 0;}
-        .settings-group label { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 14px; font-weight: 700; color: var(--accent); }
-        
-        .color-palette { display: flex; gap: 10px; justify-content: flex-start; flex-wrap: wrap; }
-        .color-swatch { width: 34px; height: 34px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: 0.2s;}
-        .color-swatch.active-color { border-color: white; transform: scale(1.15); box-shadow: 0 0 15px rgba(255,255,255,0.4); }
-
-        .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .cb-label { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-main); font-weight: 500; cursor: pointer; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 10px;}
-        .cb-label input { width: 18px; height: 18px; accent-color: var(--accent); flex-shrink: 0;}
-
-        .toggle-btn { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); color: white; width: 100%; padding: 14px; margin-bottom: 10px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 600;}
+        .toggle-btn { background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.08); color: white; width: 100%; padding: 10px; margin-bottom: 6px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 600;}
         .toggle-btn.off { color: var(--text-muted); opacity: 0.6; }
 
-        .rules-container { margin-top: 10px; margin-bottom: 30px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0;}
-        .rule-header { text-align: center; color: var(--text-muted); font-size: 13px; font-weight: 700; letter-spacing: 2px; margin-bottom: 5px; text-transform: uppercase;}
-        .rule-card { display: flex; align-items: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 12px 15px; gap: 15px; }
-        .rule-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; justify-content: center; align-items: center; font-size: 18px; color: white; flex-shrink: 0;}
-        .rule-text { display: flex; flex-direction: column; }
-        .rule-text strong { font-size: 14px; margin-bottom: 3px; }
-        .rule-text span { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+        .results-container { flex: 1; min-height: 0; overflow-y: auto; padding-right: 2px; margin-bottom: 8px; }
+        .result-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 8px 10px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+        .result-item img.res-player-img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; object-position: top center; margin-right: 8px; flex-shrink: 0;}
+        .result-item img.res-team-logo { width: 18px; height: 18px; object-fit: contain; vertical-align: middle; margin-right: 4px; }
+        .result-player-info { display: flex; align-items: center; overflow: hidden; width: 68%;}
         
-        .rc-play .rule-icon { background: var(--play-color); box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
-        .rc-bench .rule-icon { background: var(--bench-color); box-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
-        .rc-sell .rule-icon { background: var(--sell-color); box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
-        .rc-hard .rule-icon { background: #6366f1; box-shadow: 0 0 10px rgba(99, 102, 241, 0.4); }
+        .score-card { 
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(30, 41, 59, 0.9)); 
+            padding: 12px; border-radius: 14px; text-align: center; margin: 6px 0 10px 0; 
+            border: 1px solid rgba(56, 189, 248, 0.35); flex-shrink: 0;
+        }
+        .score-card p { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); font-weight: 700; }
+        
+        #total-score { 
+            font-size: 38px; margin-top: 2px; color: var(--white); font-weight: 800; 
+            opacity: 0; filter: blur(12px); transform: scale(0.7);
+        }
+        .score-fadeIn {
+            animation: slowScoreReveal 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes slowScoreReveal {
+            0% { opacity: 0; filter: blur(12px); transform: scale(0.6); }
+            40% { opacity: 0.3; filter: blur(6px); transform: scale(0.9); }
+            100% { opacity: 1; filter: blur(0); transform: scale(1); }
+        }
 
-        .result-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .result-item img { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; object-position: top center; margin-right: 12px; flex-shrink: 0;}
-        .result-player-info { display: flex; align-items: center; overflow: hidden; width: 60%;}
+        .turn-badge { background: rgba(255,255,255,0.12); padding: 4px 10px; border-radius: 14px; font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--accent); }
         
-        .score-card { background: linear-gradient(135deg, var(--accent), #1e293b); padding: 20px; border-radius: 16px; text-align: center; margin: 20px 0; border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; box-shadow: 0 10px 20px rgba(0,0,0,0.5);}
-        .score-card h2 { font-size: 42px; margin: 5px 0 0 0; color: white; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.3);}
-        .turn-badge { background: rgba(255,255,255,0.1); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; letter-spacing: 1px; }
-        
-        .loading-overlay { position: absolute; inset: 0; background: var(--bg-card); border-radius: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; gap: 15px; color: var(--accent); font-size: 14px; font-weight: 700; transition: 0.2s; }
-        .last-action-badge { display: inline-block; padding: 16px 20px; border-radius: 12px; font-size: 16px; font-weight: 800; color: white; text-align: center; width: 100%; margin-bottom: 10px; border: 2px solid rgba(255,255,255,0.2); text-transform: uppercase; letter-spacing: 1px;}
-        .badge { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 800; color: white; letter-spacing: 0.5px;}
-        .badge-play { background: var(--play-color); } .badge-bench { background: var(--bench-color); } .badge-sell { background: var(--sell-color); }
+        .loading-overlay { position: absolute; inset: 0; background: var(--bg-card); border-radius: 16px; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; gap: 10px; color: var(--accent); font-size: 13px; font-weight: 700; transition: 0.2s; }
+        .last-action-badge { display: flex; align-items: center; justify-content: center; height: 42px; border-radius: 12px; font-size: 14px; font-weight: 800; color: white; text-align: center; width: 100%; margin-bottom: 6px; border: 1px solid rgba(255,255,255,0.2); text-transform: uppercase; letter-spacing: 0.5px;}
+        .badge { padding: 3px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; letter-spacing: 0.5px;}
+        .badge-play { background: var(--play-color); color: #000; } 
+        .badge-bench { background: var(--bench-color); color: #000; } 
+        .badge-sell { background: var(--sell-color); color: #fff; }
     </style>
 </head>
 <body>
 
-    <!-- YENİ ENERJİK MÜZİK -->
     <audio id="bg-music" loop src="https://cdn.pixabay.com/download/audio/2022/02/10/audio_fc86ecf136.mp3"></audio>
     <audio id="click-sound" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_bb630cc098.mp3"></audio>
 
+    <!-- MENÜ EKRANI -->
     <div class="screen active" id="menu-screen">
-        <div class="logo-container" id="main-logo"><i class="fa-solid fa-futbol"></i></div>
-        <h1>KÖR SIRALAMA</h1>
-        <p class="subtitle">2027 KARİYER MODU</p>
+        <div style="text-align: center; margin-top: 10px;">
+            <div class="logo-container" id="main-logo"><i class="fa-solid fa-futbol"></i></div>
+            <h1>KÖR SIRALAMA</h1>
+            <p class="subtitle">EA FC 27 KARİYER MODU</p>
+        </div>
 
-        <div class="menu-buttons">
+        <div class="high-score-box" id="high-score-display">
+            <i class="fa-solid fa-trophy" style="color: var(--yellow);"></i> En Yüksek Skor: <span id="high-score-val">0</span>
+        </div>
+
+        <div class="menu-buttons" style="margin-bottom: 10px;">
             <button class="btn-primary" onclick="startGame()"><i class="fa-solid fa-play"></i> OYUNA BAŞLA</button>
             <button class="btn-secondary" onclick="showScreen('history-screen'); loadHistory();"><i class="fa-solid fa-clock-rotate-left"></i> OYUN GEÇMİŞİ</button>
             <button class="btn-secondary" onclick="showScreen('settings-screen')"><i class="fa-solid fa-sliders"></i> AYARLAR VE HAKKINDA</button>
         </div>
     </div>
 
+    <!-- GEÇMİŞ EKRANI -->
     <div class="screen" id="history-screen">
         <div class="header">
             <h2><i class="fa-solid fa-clock-rotate-left"></i> Geçmiş</h2>
             <button class="icon-btn" onclick="showScreen('menu-screen')"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <div id="history-list" style="flex:1; overflow-y:auto;"></div>
-        <button class="btn-danger" onclick="clearHistory()" style="margin-top: 15px; background:var(--sell-color);"><i class="fa-solid fa-trash"></i> Temizle</button>
+        <div id="history-list" style="flex:1; overflow-y:auto; margin: 10px 0;"></div>
+        <button class="btn-secondary" onclick="clearHistory()" style="background:var(--red); color:white;"><i class="fa-solid fa-trash"></i> Temizle</button>
     </div>
 
+    <!-- AYARLAR EKRANI -->
     <div class="screen" id="settings-screen">
         <div class="header">
             <h2><i class="fa-solid fa-sliders"></i> Ayarlar</h2>
             <button class="icon-btn" onclick="showScreen('menu-screen')"><i class="fa-solid fa-xmark"></i></button>
         </div>
         
-        <div class="settings-group">
-            <label><i class="fa-solid fa-palette"></i> Arayüz Teması</label>
-            <div class="color-palette">
-                <div class="color-swatch active-color" style="background: #3b82f6;" onclick="changeTheme('#3b82f6', this)"></div>
-                <div class="color-swatch" style="background: #ef4444;" onclick="changeTheme('#ef4444', this)"></div>
-                <div class="color-swatch" style="background: #10b981;" onclick="changeTheme('#10b981', this)"></div>
-                <div class="color-swatch" style="background: #8b5cf6;" onclick="changeTheme('#8b5cf6', this)"></div>
-                <div class="color-swatch" style="background: #f59e0b;" onclick="changeTheme('#f59e0b', this)"></div>
-                <div class="color-swatch" style="background: #be123c;" onclick="changeTheme('#be123c', this)"></div>
+        <div style="flex: 1; overflow-y: auto;">
+            <div class="settings-group">
+                <label><i class="fa-solid fa-palette"></i> Renk Teması</label>
+                <div class="color-palette">
+                    <div class="color-swatch active-color" style="background: #38bdf8;" onclick="changeTheme('#38bdf8', this)"></div>
+                    <div class="color-swatch" style="background: #ef4444;" onclick="changeTheme('#ef4444', this)"></div>
+                    <div class="color-swatch" style="background: #10b981;" onclick="changeTheme('#10b981', this)"></div>
+                    <div class="color-swatch" style="background: #f59e0b;" onclick="changeTheme('#f59e0b', this)"></div>
+                    <div class="color-swatch" style="background: #ffffff;" onclick="changeTheme('#ffffff', this)"></div>
+                </div>
             </div>
-        </div>
 
-        <div class="settings-group">
-            <label><i class="fa-solid fa-bolt"></i> Özel Modlar</label>
-            <button id="btn-toggle-hard" class="toggle-btn off" onclick="toggleHardMode()">
-                <span><i class="fa-solid fa-mask"></i> Zor Mod (Reyting Gizle)</span> <span id="hard-status">KAPALI</span>
-            </button>
-            <button id="btn-toggle-card" class="toggle-btn" onclick="toggleCardStyle()">
-                <span><i class="fa-solid fa-id-card"></i> Kart Tasarımı</span> <span id="card-status">KLASİK</span>
-            </button>
-        </div>
+            <div class="settings-group">
+                <label><i class="fa-solid fa-bolt"></i> Modlar</label>
+                <button id="btn-toggle-hard" class="toggle-btn off" onclick="toggleHardMode()">
+                    <span><i class="fa-solid fa-mask"></i> Zor Mod (Reyting Gizle)</span> <span id="hard-status">KAPALI</span>
+                </button>
+            </div>
 
-        <div class="settings-group">
-            <label><i class="fa-solid fa-headphones"></i> Ses Yönetimi</label>
-            <button id="btn-toggle-music" class="toggle-btn off" onclick="toggleMusic()">
-                <span><i class="fa-solid fa-music"></i> Arka Plan Müziği</span> <span id="music-status">KAPALI</span>
-            </button>
-            <button id="btn-toggle-sfx" class="toggle-btn" onclick="toggleSFX()">
-                <span><i class="fa-solid fa-bell"></i> Tuş Sesleri</span> <span id="sfx-status">AÇIK</span>
-            </button>
-        </div>
+            <div class="settings-group">
+                <label><i class="fa-solid fa-headphones"></i> Ses Yönetimi</label>
+                <button id="btn-toggle-music" class="toggle-btn off" onclick="toggleMusic()">
+                    <span><i class="fa-solid fa-music"></i> Müzik</span> <span id="music-status">KAPALI</span>
+                </button>
+                <button id="btn-toggle-sfx" class="toggle-btn" onclick="toggleSFX()">
+                    <span><i class="fa-solid fa-bell"></i> Tuş Sesleri</span> <span id="sfx-status">AÇIK</span>
+                </button>
+            </div>
 
-        <div class="settings-group">
-            <label><i class="fa-solid fa-earth-europe"></i> Lig Filtresi</label>
-            <div class="checkbox-grid" id="league-checkboxes">
-                <label class="cb-label"><input type="checkbox" value="superlig" checked> 🇹🇷 Süper Lig</label>
-                <label class="cb-label"><input type="checkbox" value="premier" checked> 🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier L.</label>
-                <label class="cb-label"><input type="checkbox" value="laliga" checked> 🇪🇸 La Liga</label>
-                <label class="cb-label"><input type="checkbox" value="seriea" checked> 🇮🇹 Serie A</label>
-                <label class="cb-label"><input type="checkbox" value="bundesliga" checked> 🇩🇪 Bundesliga</label>
-                <label class="cb-label"><input type="checkbox" value="ligue1" checked> 🇫🇷 Ligue 1</label>
+            <div class="settings-group">
+                <label><i class="fa-solid fa-earth-europe"></i> Lig Filtresi</label>
+                <div class="checkbox-grid" id="league-checkboxes">
+                    <label class="cb-label"><input type="checkbox" value="superlig" checked> 🇹🇷 Süper Lig</label>
+                    <label class="cb-label"><input type="checkbox" value="premier" checked> 🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier L.</label>
+                    <label class="cb-label"><input type="checkbox" value="laliga" checked> 🇪🇸 La Liga</label>
+                    <label class="cb-label"><input type="checkbox" value="seriea" checked> 🇮🇹 Serie A</label>
+                    <label class="cb-label"><input type="checkbox" value="bundesliga" checked> 🇩🇪 Bundesliga</label>
+                    <label class="cb-label"><input type="checkbox" value="ligue1" checked> 🇫🇷 Ligue 1</label>
+                </div>
             </div>
-        </div>
 
-        <div class="settings-group">
-            <label><i class="fa-solid fa-street-view"></i> Mevki Filtresi</label>
-            <div class="checkbox-grid" id="pos-checkboxes">
-                <label class="cb-label"><input type="checkbox" value="KL" checked> 🧤 Kaleci (KL)</label>
-                <label class="cb-label"><input type="checkbox" value="DF" checked> 🛡️ Defans (DF)</label>
-                <label class="cb-label"><input type="checkbox" value="OS" checked> 👟 Orta (OS)</label>
-                <label class="cb-label"><input type="checkbox" value="FV" checked> 🎯 Forvet (FV)</label>
-            </div>
-        </div>
-
-        <div class="rule-header">OYUN KURALLARI</div>
-        <div class="rules-container">
-            <div class="rule-card rc-play">
-                <div class="rule-icon"><i class="fa-solid fa-shirt"></i></div>
-                <div class="rule-text"><strong style="color:var(--play-color);">İLK 11'DE OYNAT</strong><span>Oyuncunun tam reyting puanını kazan.</span></div>
-            </div>
-            <div class="rule-card rc-bench">
-                <div class="rule-icon"><i class="fa-solid fa-chair"></i></div>
-                <div class="rule-text"><strong style="color:var(--bench-color);">YEDEK BIRAK</strong><span>Oyuncunun reyting puanının %50'sini kazan.</span></div>
-            </div>
-            <div class="rule-card rc-sell">
-                <div class="rule-icon"><i class="fa-solid fa-handshake"></i></div>
-                <div class="rule-text"><strong style="color:var(--sell-color);">TRANSFER ET (SAT)</strong><span>Zayıf oyuncuyu satarak (100 - Reyting) kadar puan kazan.</span></div>
-            </div>
-            <div class="rule-card rc-hard">
-                <div class="rule-icon"><i class="fa-solid fa-mask"></i></div>
-                <div class="rule-text"><strong style="color:#818cf8;">ZOR MOD KURALI</strong><span>Ayarlardan açıldığında reytingler gizlenir. Sadece yeteneğine güven!</span></div>
+            <div class="settings-group">
+                <label><i class="fa-solid fa-street-view"></i> Mevki Filtresi</label>
+                <div class="checkbox-grid" id="pos-checkboxes">
+                    <label class="cb-label"><input type="checkbox" value="KL" checked> 🧤 Kaleci (KL)</label>
+                    <label class="cb-label"><input type="checkbox" value="DF" checked> 🛡️ Defans (DF)</label>
+                    <label class="cb-label"><input type="checkbox" value="OS" checked> 👟 Orta (OS)</label>
+                    <label class="cb-label"><input type="checkbox" value="FV" checked> 🎯 Forvet (FV)</label>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- OYUN EKRANI -->
     <div class="screen" id="game-screen">
-        <div class="game-header"><span class="turn-badge" id="turn-text">1. OYUNCU</span></div>
+        <div class="header" style="justify-content: center;">
+            <span class="turn-badge" id="turn-text">1. OYUNCU</span>
+        </div>
         
-        <div class="player-card card-style-klasik" id="active-card">
-            <div class="loading-overlay" id="loading-overlay"><i class="fa-solid fa-circle-notch fa-spin fa-2x"></i><span id="loading-text" style="margin-top:10px;">Bulunuyor...</span></div>
-            <div class="league-badge" id="player-league-icon">🌍</div>
-            <img id="player-image" class="player-image" src="" alt="Oyuncu">
+        <div class="player-card" id="active-card">
+            <div class="loading-overlay" id="loading-overlay">
+                <i class="fa-solid fa-circle-notch fa-spin fa-2x"></i>
+                <span id="loading-text">Yükleniyor...</span>
+            </div>
+
+            <!-- ARKA PLANDA ORTALANMIŞ VE GÖLGELİ BÜYÜK LOGO -->
+            <img id="card-bg-logo" class="card-team-logo-bg" src="" alt="" referrerpolicy="no-referrer" onerror="handleImgError(this)">
+
+            <div class="card-top-row">
+                <div class="team-badge-container">
+                    <img id="player-team-logo" class="team-logo-img" src="" alt="Takım Logo" referrerpolicy="no-referrer" onerror="handleImgError(this)">
+                    <span id="player-team" class="team-badge-text">---</span>
+                </div>
+                <span id="player-league-icon" style="font-size: 18px;">🌍</span>
+            </div>
+
+            <div class="player-image-wrap">
+                <img id="player-image" class="player-image" src="" alt="Oyuncu">
+            </div>
+
             <div class="player-info">
-                <div class="name-container"><h2 id="player-name">---</h2></div>
-                <div class="rating-badge" id="player-rating">R: 00</div>
-                <div class="team-pos-row"><span class="pos-badge" id="player-pos">--</span><span class="team-name" id="player-team">---</span></div>
-                <p id="player-league-name" class="league-name">---</p>
+                <h2 id="player-name">---</h2>
+                <div class="rating-badge" id="player-rating">R: --</div>
+                <div class="team-pos-row">
+                    <span class="pos-badge" id="player-pos">--</span>
+                    <span id="player-league-name" class="league-name">---</span>
+                </div>
             </div>
         </div>
 
@@ -249,14 +346,21 @@
 
         <div class="action-buttons" id="last-player-area" style="display: none;">
             <div id="last-action-display" class="last-action-badge">---</div>
-            <button class="btn-primary" onclick="endGame()" style="width: 100%;"><i class="fa-solid fa-file-invoice"></i> MAÇ RAPORUNU GÖR</button>
+            <button class="btn-primary" onclick="endGame()" style="width: 100%; height: 42px;"><i class="fa-solid fa-file-invoice"></i> MAÇ RAPORUNU GÖR</button>
         </div>
     </div>
 
+    <!-- SONUÇ EKRANI -->
     <div class="screen" id="result-screen">
         <div class="header"><h2><i class="fa-solid fa-chart-simple"></i> Maç Raporu</h2></div>
-        <div id="results-list" style="flex:1; overflow-y:auto; padding-right:5px;"></div>
-        <div class="score-card" id="score-card-bg"><p>Toplam Kazancın</p><h2 id="total-score">0</h2></div>
+        
+        <div class="results-container" id="results-list"></div>
+        
+        <div class="score-card" id="score-card-bg">
+            <p>Toplam Kazancın</p>
+            <h2 id="total-score">0</h2>
+        </div>
+
         <div class="menu-buttons">
             <button class="btn-primary" onclick="startGame()"><i class="fa-solid fa-rotate-right"></i> YENİ MAÇA ÇIK</button>
             <button class="btn-secondary" onclick="showScreen('menu-screen')"><i class="fa-solid fa-house"></i> ANA MENÜ</button>
@@ -264,18 +368,79 @@
     </div>
 
     <script>
-        // ================= AYARLAR VE SES YÖNETİMİ =================
-        let isHardMode = false, currentCardStyleIndex = 0, isSfxMuted = false, isMusicMuted = true;
-        let cardStyles = ["klasik", "neon", "cam"];
+        let isHardMode = false, isSfxMuted = false, isMusicMuted = true;
         const clickSound = document.getElementById('click-sound');
         const bgAudio = document.getElementById('bg-music');
-        bgAudio.volume = 0.4;
+        bgAudio.volume = 0.3;
 
-        // UYGULAMADAN ÇIKINCA MÜZİĞİ SUSTUR
         document.addEventListener("visibilitychange", () => {
             if (document.hidden) { bgAudio.pause(); } 
             else { if (!isMusicMuted) bgAudio.play().catch(()=>{}); }
         });
+
+        /* YÜKSEK ÇÖZÜNÜRLÜKLÜ DOĞRUDAN KULÜP LOGO BAĞLANTILARI */
+        const TEAM_LOGOS = {
+            "GALATASARAY": "https://images.fotmob.com/image_resources/logo/teamlogo/8637.png",
+            "FENERBAHÇE": "https://assets.football-logos.cc/logos/turkey/512x512/fenerbahce.ad038cac.png",
+            "BEŞİKTAŞ": "https://assets.football-logos.cc/logos/turkey/512x512/besiktas.0ec1a299.png",
+            "TRABZONSPOR": "https://assets.football-logos.cc/logos/turkey/512x512/trabzonspor.32812ba8.png",
+            "REAL MADRID": "https://images.fotmob.com/image_resources/logo/teamlogo/8633.png",
+            "BARCELONA": "https://images.fotmob.com/image_resources/logo/teamlogo/8634.png",
+            "ATLÉTICO MADRID": "https://images.fotmob.com/image_resources/logo/teamlogo/9906.png",
+            "BAYERN MÜNİH": "https://images.fotmob.com/image_resources/logo/teamlogo/9823.png",
+            "BORUSSIA DORTMUND": "https://images.fotmob.com/image_resources/logo/teamlogo/9789.png",
+            "PSG": "https://images.fotmob.com/image_resources/logo/teamlogo/9847.png",
+            "ARSENAL": "https://images.fotmob.com/image_resources/logo/teamlogo/9825.png",
+            "MANCHESTER CITY": "https://images.fotmob.com/image_resources/logo/teamlogo/8456.png",
+            "LIVERPOOL": "https://images.fotmob.com/image_resources/logo/teamlogo/8650.png",
+            "CHELSEA": "https://images.fotmob.com/image_resources/logo/teamlogo/8455.png",
+            "MANCHESTER UNITED": "https://images.fotmob.com/image_resources/logo/teamlogo/10260.png",
+            "INTER MILAN": "https://images.fotmob.com/image_resources/logo/teamlogo/8635.png",
+            "AS ROMA": "https://images.fotmob.com/image_resources/logo/teamlogo/8686.png",
+            "AC MILAN": "https://images.fotmob.com/image_resources/logo/teamlogo/8564.png",
+            "JUVENTUS": "https://images.fotmob.com/image_resources/logo/teamlogo/9885.png",
+            "NAPOLI": "https://images.fotmob.com/image_resources/logo/teamlogo/9875.png"
+        };
+
+        /* İKİNCİL YEDEK LOGOLAR */
+        const FALLBACK_LOGOS = {
+            "GALATASARAY": "https://api.sofascore.app/api/v1/team/3061/image",
+            "FENERBAHÇE": "https://images.fotmob.com/image_resources/logo/teamlogo/8636.png",
+            "BEŞİKTAŞ": "https://api.sofascore.app/api/v1/team/3050/image",
+            "TRABZONSPOR": "https://api.sofascore.app/api/v1/team/3063/image",
+            "REAL MADRID": "https://api.sofascore.app/api/v1/team/2829/image",
+            "BARCELONA": "https://api.sofascore.app/api/v1/team/2817/image",
+            "ATLÉTICO MADRID": "https://api.sofascore.app/api/v1/team/2836/image",
+            "BAYERN MÜNİH": "https://api.sofascore.app/api/v1/team/2672/image",
+            "BORUSSIA DORTMUND": "https://api.sofascore.app/api/v1/team/2673/image",
+            "PSG": "https://api.sofascore.app/api/v1/team/1644/image",
+            "ARSENAL": "https://api.sofascore.app/api/v1/team/42/image",
+            "MANCHESTER CITY": "https://api.sofascore.app/api/v1/team/17/image",
+            "LIVERPOOL": "https://api.sofascore.app/api/v1/team/44/image",
+            "CHELSEA": "https://api.sofascore.app/api/v1/team/38/image",
+            "MANCHESTER UNITED": "https://api.sofascore.app/api/v1/team/35/image",
+            "INTER MILAN": "https://api.sofascore.app/api/v1/team/2697/image",
+            "AS ROMA": "https://api.sofascore.app/api/v1/team/2702/image",
+            "AC MILAN": "https://api.sofascore.app/api/v1/team/2692/image",
+            "JUVENTUS": "https://api.sofascore.app/api/v1/team/2685/image",
+            "NAPOLI": "https://api.sofascore.app/api/v1/team/2714/image"
+        };
+
+        function handleImgError(img) {
+            let teamName = img.alt || '';
+            if (FALLBACK_LOGOS[teamName] && img.src !== FALLBACK_LOGOS[teamName]) {
+                img.src = FALLBACK_LOGOS[teamName];
+            } else {
+                img.onerror = null;
+                img.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(teamName || 'FC')}&background=38bdf8&color=fff&bold=true`;
+            }
+        }
+
+        function updateHighScoreDisplay() {
+            let hist = JSON.parse(localStorage.getItem('fks_history')) || [];
+            let maxScore = hist.length > 0 ? Math.max(...hist.map(h => h.score)) : 0;
+            document.getElementById('high-score-val').innerText = maxScore;
+        }
 
         function toggleMusic() {
             isMusicMuted = !isMusicMuted; bgAudio.muted = isMusicMuted;
@@ -288,1409 +453,538 @@
             document.getElementById('hard-status').innerText = isHardMode ? "AÇIK" : "KAPALI";
             document.getElementById('btn-toggle-hard').classList.toggle('off', !isHardMode);
         }
-        function toggleCardStyle() {
-            currentCardStyleIndex = (currentCardStyleIndex + 1) % cardStyles.length;
-            document.getElementById('card-status').innerText = cardStyles[currentCardStyleIndex].toUpperCase();
-            document.getElementById('active-card').className = "player-card card-style-" + cardStyles[currentCardStyleIndex];
-        }
         function toggleSFX() {
             isSfxMuted = !isSfxMuted;
             document.getElementById('sfx-status').innerText = isSfxMuted ? "KAPALI" : "AÇIK";
-            document.getElementById('btn-toggle-sfx').classList.toggle('off', isSfxMuted);
+            document.getElementById('btn-toggle-sfx').classList.toggle('off', !isSfxMuted);
         }
         function playSound() {
             if(!isSfxMuted) { clickSound.currentTime = 0; clickSound.play().catch(()=>{}); }
-            if(navigator.vibrate) navigator.vibrate(15);
+            if(navigator.vibrate) navigator.vibrate(12);
         }
         function changeTheme(color, el) {
             document.documentElement.style.setProperty('--accent', color);
             localStorage.setItem('fks_theme', color);
             document.querySelectorAll('.color-swatch').forEach(e => e.classList.remove('active-color'));
-            el.classList.add('active-color');
-            document.getElementById('score-card-bg').style.background = `linear-gradient(135deg, ${color}, #1e293b)`;
-            document.getElementById('main-logo').style.filter = `drop-shadow(0px 0px 15px ${color})`;
+            if(el) el.classList.add('active-color');
+            document.getElementById('main-logo').style.filter = `drop-shadow(0px 0px 10px ${color})`;
         }
         window.onload = () => {
             let t = localStorage.getItem('fks_theme');
-            if(t) {
-                document.documentElement.style.setProperty('--accent', t);
-                document.getElementById('score-card-bg').style.background = `linear-gradient(135deg, ${t}, #1e293b)`;
-                document.getElementById('main-logo').style.filter = `drop-shadow(0px 0px 15px ${t})`;
-                document.querySelectorAll('.color-swatch').forEach(e => { if(e.getAttribute('style').includes(t)) e.classList.add('active-color'); });
-            }
+            if(t) changeTheme(t, null);
+            updateHighScoreDisplay();
         };
 
         const LEAGUE_META = {
-            "premier": { icon: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", name: "Premier League" }, "laliga": { icon: "🇪🇸", name: "La Liga" },
-            "seriea": { icon: "🇮🇹", name: "Serie A" }, "ligue1": { icon: "🇫🇷", name: "Ligue 1" },
-            "bundesliga": { icon: "🇩🇪", name: "Bundesliga" }, "superlig": { icon: "🇹🇷", name: "Süper Lig" }
+            "premier": { icon: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", name: "Premier League" }, 
+            "laliga": { icon: "🇪🇸", name: "La Liga" },
+            "seriea": { icon: "🇮🇹", name: "Serie A" }, 
+            "ligue1": { icon: "🇫🇷", name: "Ligue 1" },
+            "bundesliga": { icon: "🇩🇪", name: "Bundesliga" }, 
+            "superlig": { icon: "🇹🇷", name: "Süper Lig" }
         };
 
-        // ================= SENİN LİSTENİ OKUYAN OTOMATİK MOTOR =================
-        const rawDatabaseString = `
-PREMIER LEAGUE :
-ARSENAL
-KL: David Raya, Kepa Arrizabalaga
-STP: William Saliba, Gabriel Magalhães
-SLB: Riccardo Calafiori, Piero Hincapié
-SĞB: Ben White, Jurriën Timber
-DOS: Declan Rice, Christian Nørgaard, Martín Zubimendi
-MO: Mikel Merino
-OOS: Martin Ødegaard, Eberechi Eze
-SĞK: Bukayo Saka, Noni Madueke
-SLK: Gabriel Martinelli, Leandro Trossard
-SNT: Viktor Gyökeres, Kai Havertz, Gabriel Jesus
-ASTON VILLA
-KL: Emiliano Martínez, Marco Bizot
-STP: Ezri Konsa, Tyrone Mings, Victor Lindelöf, Pau Torres
-SLB: Ian Maatsen, Lucas Digne
-SĞB: Matty Cash
-DOS: Boubacar Kamara, Amadou Onana
-MO: Youri Tielemans, Douglas Luiz, Ross Barkley
-OOS: Morgan Rogers, Emiliano Buendía
-SĞK: Leon Bailey, Jadon Sancho
-SLK: Harvey Elliott
-SNT: Ollie Watkins, Tammy Abraham
-BRENTFORD
-KL: Caoimhín Kelleher, Hákon Valdimarsson, Ellery Balcombe
-STP: Nathan Collins, Ethan Pinnock, Sepp van den Berg, Kristoffer Ajer
-SLB: Rico Henry
-SĞB: Aaron Hickey
-DOS: Vitaly Janelt
-MO: Jordan Henderson, Mathias Jensen, Yehor Yarmoliuk
-OOS: Mikkel Damsgaard, Fabio Carvalho
-SĞK: Dango Ouattara, Reiss Nelson
-SLK: Kevin Schade, Keane Lewis-Potter
-SNT: Igor Thiago
-BRIGHTON
-KL: Bart Verbruggen, Jason Steele, Carl Rushworth
-STP: Lewis Dunk, Jan Paul van Hecke, Adam Webster, Olivier Boscagli
-SLB: Maxim De Cuyper, Ferdi Kadıoğlu
-SĞB: Joel Veltman
-DOS: Mats Wieffer
-MO: James Milner, Matt O'Riley, Yasin Ayari, Pascal Groß
-OOS: Georginio Rutter
-SĞK: Solly March
-SLK: Kaoru Mitoma
-SNT: Danny Welbeck
-TOTTENHAM HOTSPUR
-KL: Guglielmo Vicario
-STP: Tosin Adarabioyo, Marcos Senesi, Jan Paul van Hecke
-SLB: Destiny Udogie, Andy Robertson
-SĞB: Pedro Porro
-DOS: Sandro Tonali
-MO: Archie Gray, Lucas Bergvall, Conor Gallagher, Mateus Fernandes
-OOS: Xavi Simons, James Maddison
-SĞK: Mohammed Kudus, Savinho
-SLK: Mathys Tel, Mykhailo Mudryk
-SNT: Dominic Solanke, Omar Marmoush
-LİVERPOOL
-KL: Alisson Becker, Giorgi Mamardashvili
-STP: Virgil van Dijk, Ibrahima Konaté, Joe Gomez
-SLB: Milos Kerkez
-SĞB: Jeremie Frimpong, Conor Bradley
-DOS: Ryan Gravenberch
-MO: Alexis Mac Allister, Dominik Szoboszlai, Curtis Jones
-OOS: Florian Wirtz
-SĞK: Mohamed Salah
-SLK: Cody Gakpo
-SNT: Alexander Isak, Hugo Ekitike
-MANCHESTER CITY
-KL: Gianluigi Donnarumma, Ederson
-STP: Rúben Dias, John Stones, Joško Gvardiol
-SLB: Nico O'Reilly
-SĞB: Matheus Nunes
-DOS: Rodri
-MO: Mateo Kovačić, Tijjani Reijnders, Bernardo Silva
-OOS: Phil Foden, Rayan Cherki
-SĞK: Savinho
-SLK: Jérémy Doku
-SNT: Erling Haaland, Omar Marmoush
-MANCHESTER UNITED
-KL: André Onana, Altay Bayındır
-STP: Matthijs de Ligt, Lisandro Martínez, Harry Maguire
-SLB: Luke Shaw, Patrick Dorgu
-SĞB: Diogo Dalot, Noussair Mazraoui
-DOS: Manuel Ugarte
-MO: Bruno Fernandes, Kobbie Mainoo, Mason Mount
-OOS: Bruno Fernandes
-SĞK: Amad Diallo
-SLK: Alejandro Garnacho
-SNT: Rasmus Højlund, Joshua Zirkzee, Benjamin Šeško
-CHELSEA
-KL: Robert Sánchez, Filip Jørgensen
-STP: Levi Colwill, Wesley Fofana, Tosin Adarabioyo
-SLB: Marc Cucurella, Jorrel Hato
-SĞB: Reece James, Malo Gusto
-DOS: Moisés Caicedo
-MO: Enzo Fernández, Roméo Lavia
-OOS: Cole Palmer
-SĞK: Pedro Neto, Estêvão
-SLK: Jamie Gittens, Mykhailo Mudryk
-SNT: João Pedro, Liam Delap
-NEWCASTLE UNITED
-KL: Nick Pope, Aaron Ramsdale
-STP: Sven Botman, Fabian Schär, Dan Burn
-SLB: Lewis Hall
-SĞB: Kieran Trippier, Tino Livramento
-DOS: Sandro Tonali, Bruno Guimarães
-MO: Joelinton, Joe Willock
-OOS: Jacob Ramsey
-SĞK: Anthony Elanga
-SLK: Harvey Barnes
-SNT: Alexander Isak, Nick Woltemade
-NOTTINGHAM FOREST
-KL: Matz Sels
-STP: Murillo, Nikola Milenković
-SLB: Neco Williams
-SĞB: Ola Aina
-DOS: Ibrahim Sangaré
-MO: Elliot Anderson, Nicolás Domínguez
-OOS: Morgan Gibbs-White
-SĞK: Callum Hudson-Odoi
-SLK: Dan Ndoye
-SNT: Chris Wood
-WEST HAM UNITED
-KL: Alphonse Areola
-STP: Max Kilman, Jean-Clair Todibo
-SLB: Emerson Palmieri
-SĞB: Aaron Wan-Bissaka
-DOS: Edson Álvarez
-MO: Tomáš Souček, Guido Rodríguez
-OOS: Lucas Paquetá
-SĞK: Jarrod Bowen
-SLK: Crysencio Summerville
-SNT: Niclas Füllkrug
-FULHAM
-KL: Bernd Leno
-STP: Calvin Bassey, Joachim Andersen
-SLB: Antonee Robinson
-SĞB: Kenny Tete
-DOS: Sander Berge
-MO: Sasa Lukic, Alex Iwobi
-OOS: Emile Smith Rowe
-SĞK: Harry Wilson
-SLK: Adama Traoré
-SNT: Raúl Jiménez
-BOURNEMOUTH
-KL: Djordje Petrović, Fraser Forster
-STP: Marcos Senesi, Bafodé Diakité, James Hill
-SLB: Adrien Truffert
-SĞB: Adam Smith
-DOS: Tyler Adams, Lewis Cook
-MO: Alex Scott, Ryan Christie
-OOS: Justin Kluivert
-SĞK: David Brooks, Marcus Tavernier
-SLK: Amine Adli
-SNT: Evanilson, Enes Ünal
-EVERTON
-KL: Jordan Pickford
-STP: James Tarkowski, Jarrad Branthwaite
-SLB: Vitaliy Mykolenko
-SĞB: Nathan Patterson
-DOS: Idrissa Gueye
-MO: James Garner, Tim Iroegbunam
-OOS: Dwight McNeil
-SĞK: Jack Grealish
-SLK: Iliman Ndiaye
-SNT: Beto, Thierno Barry
-CRYSTAL PALACE
-KL: Dean Henderson
-STP: Marc Guéhi, Maxence Lacroix
-SLB: Tyrick Mitchell
-SĞB: Daniel Muñoz
-DOS: Jefferson Lerma
-MO: Adam Wharton, Will Hughes
-OOS: Daichi Kamada
-SĞK: Ismaïla Sarr
-SLK: Eberechi Eze
-SNT: Jean-Philippe Mateta
-WOLVERHAMPTON WANDERERS
-KL: José Sá
-STP: Santiago Bueno, Toti Gomes
-SLB: Rayan Aït-Nouri
-SĞB: Matt Doherty
-DOS: João Gomes
-MO: André, Mario Lemina
-OOS: Pablo Sarabia
-SĞK: Rodrigo Gomes
-SLK: Hwang Hee-chan
-SNT: Jørgen Strand Larsen
-LEEDS UNITED
-KL: Illan Meslier
-STP: Joe Rodon, Pascal Struijk
-SLB: Junior Firpo
-SĞB: Jayden Bogle
-DOS: Ethan Ampadu
-MO: Ao Tanaka, Ilia Gruev
-OOS: Brenden Aaronson
-SĞK: Daniel James
-SLK: Wilfried Gnonto
-SNT: Dominic Calvert-Lewin, Joel Piroe
-BURNLEY
-KL: James Trafford
-STP: Maxime Estève, Joe Worrall
-SLB: Lucas Pires
-SĞB: Kyle Walker
-DOS: Josh Cullen
-MO: Josh Brownhill, Lesley Ugochukwu
-OOS: Hannibal Mejbri
-SĞK: Jaidon Anthony
-SLK: Marcus Edwards
-SNT: Lyle Foster, Zian Flemming
-SUNDERLAND
-KL: Robin Roefs
-STP: Daniel Ballard, Omar Alderete
-SLB: Dennis Cirkin
-SĞB: Trai Hume
-DOS: Granit Xhaka
-MO: Noah Sadiki, Jobe Bellingham
-OOS: Enzo Le Fée
-SĞK: Patrick Roberts
-SLK: Romaine Mundle
-SNT: Wilson Isidor
-HULL CITY
-KL: Ivor Pandur
-STP: Charlie Hughes, Alfie Jones
-SLB: Ryan Giles
-SĞB: Lewie Coyle
-DOS: Regan Slater
-MO: Matt Crooks
-OOS: Kieran Dowell
-SĞK: David Akintola
-SLK: Liam Millar
-SNT: Oli McBurnie
-IPSWICH TOWN
-KL: Alex Palmer, David Button
-STP: Dara O'Shea, Jacob Greaves
-SLB: Leif Davis
-SĞB: Ben Johnson
-DOS: Sam Morsy
-MO: Jens Cajuste, Jack Taylor
-OOS: Conor Chaplin
-SĞK: Wes Burns
-SLK: Jaden Philogene
-SNT: Liam Delap, George Hirst
-COVENTRY CITY
-KL: Carl Rushworth
-STP: Bobby Thomas, Liam Kitching
-SLB: Jake Bidwell
-SĞB: Milan van Ewijk
-DOS: Ben Sheaf
-MO: Matt Grimes
-OOS: Brandon Thomas-Asante
-SĞK: Tatsuhiro Sakamoto
-SLK: Ephron Mason-Clark
-SNT: Haji Wright, Ellis Simms
+        const database = [
+            // BAYERN MÜNİH
+            { name: "Harry Kane", team: "BAYERN MÜNİH", league: "bundesliga", pos: "FV", rating: 90 },
+            { name: "Michael Olise", team: "BAYERN MÜNİH", league: "bundesliga", pos: "FV", rating: 90 },
+            { name: "Joshua Kimmich", team: "BAYERN MÜNİH", league: "bundesliga", pos: "OS", rating: 88 },
+            { name: "Luis Díaz", team: "BAYERN MÜNİH", league: "bundesliga", pos: "FV", rating: 88 },
+            { name: "Dayot Upamecano", team: "BAYERN MÜNİH", league: "bundesliga", pos: "DF", rating: 87 },
+            { name: "Jonathan Tah", team: "BAYERN MÜNİH", league: "bundesliga", pos: "DF", rating: 87 },
+            { name: "Jamal Musiala", team: "BAYERN MÜNİH", league: "bundesliga", pos: "FV", rating: 87 },
+            { name: "Konrad Laimer", team: "BAYERN MÜNİH", league: "bundesliga", pos: "DF", rating: 85 },
+            { name: "Ismael Saibari", team: "BAYERN MÜNİH", league: "bundesliga", pos: "OS", rating: 83 },
+            { name: "Serge Gnabry", team: "BAYERN MÜNİH", league: "bundesliga", pos: "FV", rating: 83 },
+            { name: "Kim Min-jae", team: "BAYERN MÜNİH", league: "bundesliga", pos: "DF", rating: 83 },
+            { name: "Aleksandar Pavlović", team: "BAYERN MÜNİH", league: "bundesliga", pos: "OS", rating: 83 },
+            { name: "Alphonso Davies", team: "BAYERN MÜNİH", league: "bundesliga", pos: "DF", rating: 82 },
+            { name: "João Palhinha", team: "BAYERN MÜNİH", league: "bundesliga", pos: "OS", rating: 82 },
+            { name: "Manuel Neuer", team: "BAYERN MÜNİH", league: "bundesliga", pos: "KL", rating: 81 },
+            { name: "Nathaniel Brown", team: "BAYERN MÜNİH", league: "bundesliga", pos: "DF", rating: 81 },
+            { name: "Josip Stanišić", team: "BAYERN MÜNİH", league: "bundesliga", pos: "DF", rating: 80 },
+            { name: "Tom Bischof", team: "BAYERN MÜNİH", league: "bundesliga", pos: "OS", rating: 79 },
+            { name: "Jonas Urbig", team: "BAYERN MÜNİH", league: "bundesliga", pos: "KL", rating: 79 },
+            { name: "Hiroki Ito", team: "BAYERN MÜNİH", league: "bundesliga", pos: "DF", rating: 78 },
+            { name: "Lennart Karl", team: "BAYERN MÜNİH", league: "bundesliga", pos: "FV", rating: 77 },
+            { name: "Bryan Zaragoza", team: "BAYERN MÜNİH", league: "bundesliga", pos: "FV", rating: 77 },
+            { name: "Sacha Boey", team: "BAYERN MÜNİH", league: "bundesliga", pos: "DF", rating: 75 },
+            { name: "Arijon Ibrahimović", team: "BAYERN MÜNİH", league: "bundesliga", pos: "FV", rating: 75 },
 
-LA LIGA :
-REAL MADRID
-KL: Thibaut Courtois, Andriy Lunin, Fran González
-STP: Éder Militão, Antonio Rüdiger, Dean Huijsen, Raúl Asencio
-SLB: Álvaro Carreras, Fran García
-SĞB: Dani Carvajal, Trent Alexander-Arnold
-DOS: Aurélien Tchouaméni
-MO: Federico Valverde, Eduardo Camavinga, Arda Güler
-OOS: Jude Bellingham
-SĞK: Rodrygo, Brahim Díaz
-SLK: Vinícius Júnior
-SNT: Kylian Mbappé, Endrick
-BARCELONA
-KL: Joan García, Wojciech Szczęsny, Dominik Livaković
-STP: Pau Cubarsí, Andreas Christensen, Eric García
-SLB: Alejandro Balde, Gerard Martín
-SĞB: Jules Koundé, João Cancelo
-DOS: Marc Bernal, Rodrigo
-MO: Pedri, Gavi, Frenkie de Jong, Fermín López
-OOS: Dani Olmo
-SĞK: Lamine Yamal, Roony Bardghji
-SLK: Raphinha, Karim Adeyemi
-SNT: Gabriel Jesus, Hamza Abdelkarim
-ATLÉTICO MADRID
-KL: Jan Oblak, Juan Musso, Esquivel
-STP: David Hancko, Robin Le Normand, Marc Pubill
-SLB: Álex Grimaldo
-SĞB: Marcos Llorente
-DOS: Johnny Cardoso, Morten Hjulmand
-MO: Koke, Pablo Barrios, Obed Vargas, Rodrigo Mendoza
-OOS: Kang-in Lee, Álex Baena
-SĞK: Giuliano Simeone
-SLK: Ademola Lookman
-SNT: Julián Álvarez, Alexander Sørloth, Jonathan David
-ATHLETIC BILBAO
-KL: Unai Simón, Julen Agirrezabala
-STP: Dani Vivian, Aitor Paredes, Yeray Álvarez
-SLB: Yuri Berchiche
-SĞB: Óscar de Marcos, Andoni Gorosabel
-DOS: Iñigo Ruiz de Galarreta
-MO: Mikel Jauregizar, Beñat Prados
-OOS: Oihan Sancet
-SĞK: Iñaki Williams
-SLK: Nico Williams, Álex Berenguer
-SNT: Gorka Guruzeta, Maroan Sannadi
-REAL BETIS
-KL: Álvaro Valles, Adrián
-STP: Diego Llorente, Marc Bartra, Natan
-SLB: Ricardo Rodríguez
-SĞB: Héctor Bellerín, Aitor Ruibal
-DOS: Marc Roca
-MO: Sergi Altimira, Pablo Fornals
-OOS: Isco, Giovani Lo Celso
-SĞK: Antony
-SLK: Abde Ezzalzouli
-SNT: Cédric Bakambu, Cucho Hernández
-REAL SOCIEDAD
-KL: Álex Remiro, Unai Marrero
-STP: Igor Zubeldia, Jon Martín
-SLB: Aihen Muñoz, Sergio Gómez
-SĞB: Hamari Traoré
-DOS: Martín Zubimendi
-MO: Brais Méndez, Beñat Turrientes
-OOS: Luka Sučić
-SĞK: Takefusa Kubo
-SLK: Ander Barrenetxea
-SNT: Mikel Oyarzabal, Orri Óskarsson
-VILLARREAL
-KL: Luiz Júnior, Diego Conde
-STP: Pau Navarro, Logan Costa, Juan Foyth
-SLB: Alfonso Pedraza, Sergi Cardona
-SĞB: Kiko Femenía
-DOS: Pape Gueye
-MO: Dani Parejo, Santi Comesaña
-OOS: Álex Baena
-SĞK: Ilias Akhomach
-SLK: Yeremy Pino
-SNT: Gerard Moreno, Ayoze Pérez, Nicolas Pépé
-VALENCIA
-KL: Giorgi Mamardashvili, Stole Dimitrievski
-STP: Cristhian Mosquera, César Tárrega
-SLB: José Gayà
-SĞB: Thierry Correia
-DOS: Pepelu
-MO: Javi Guerra, André Almeida
-OOS: Diego López
-SĞK: Fran Pérez
-SLK: Luis Rioja
-SNT: Hugo Duro, Umar Sadiq
-SEVILLA
-KL: Ørjan Nyland, Álvaro Fernández
-STP: Loïc Badé, Nemanja Gudelj, Kike Salas
-SLB: Adrià Pedrosa
-SĞB: Juanlu Sánchez
-DOS: Lucien Agoumé
-MO: Djibril Sow, Manu Bueno
-OOS: Suso
-SĞK: Dodi Lukébakio
-SLK: Chidera Ejuke
-SNT: Isaac Romero, Akor Adams
-CELTA VIGO
-KL: Vicente Guaita, Iván Villar
-STP: Carl Starfelt, Marcos Alonso
-SLB: Mihailo Ristić
-SĞB: Óscar Mingueza
-DOS: Fran Beltrán
-MO: Ilaix Moriba, Hugo Sotelo
-OOS: Iago Aspas
-SĞK: Franco Cervi
-SLK: Williot Swedberg
-SNT: Borja Iglesias, Ferran Jutglà
-GETAFE
-KL: David Soria, Jiri Letacek
-STP: Djené, Abdel Abqar, Youssef Sazonov
-SLB: Johan Mojica
-SĞB: Davinchi
-DOS: Mario Martín
-MO: Nemanja Gudelj, Ramon Terrats, Uche
-OOS: Francho Serrano, Risco
-SĞK: Juanmi
-SLK: Adrián Liso
-SNT: Borja Mayoral, Martín Satriano, Enes Ünal
-OSASUNA
-KL: Sergio Herrera, Aitor Fernández
-STP: Alejandro Catena, David García
-SLB: Juan Cruz
-SĞB: Jesús Areso
-DOS: Lucas Torró
-MO: Jon Moncayola, Aimar Oroz
-OOS: Rubén García
-SĞK: Kike Barja
-SLK: Bryan Zaragoza
-SNT: Ante Budimir, Raúl García
-DEPORTIVO ALAVÉS
-KL: Antonio Sivera, Jesús Owono
-STP: Abdelkabir Abqar, Rafa Marín
-SLB: Manu Sánchez
-SĞB: Nahuel Tenaglia
-DOS: Antonio Blanco
-MO: Ander Guevara, Carlos Benavídez
-OOS: Carles Aleñá
-SĞK: Carlos Vicente
-SLK: Abde Rebbach
-SNT: Kike García, Toni Martínez
-ESPANYOL
-KL: Joan García, Fernando Pacheco
-STP: Leandro Cabrera, Marash Kumbulla
-SLB: Brian Oliván
-SĞB: Omar El Hilali
-DOS: José Gragera
-MO: Pol Lozano, Edu Expósito
-OOS: Javi Puado
-SĞK: Antoniu Roca
-SLK: Pere Milla
-SNT: Roberto Fernández, Kike García
-RAYO VALLECANO
-KL: Augusto Batalla, Dani Cárdenas
-STP: Florian Lejeune, Abdul Mumin
-SLB: Pep Chavarría
-SĞB: Andrei Rațiu
-DOS: Pathé Ciss
-MO: Óscar Valentín, Unai López
-OOS: Isi Palazón
-SĞK: Jorge de Frutos
-SLK: Álvaro García
-SNT: Sergio Camello, Randy Nteka
-ELCHE
-KL: Matías Dituro, Édgar Badía
-STP: Pedro Bigas, David Affengruber
-SLB: Carlos Clerc
-SĞB: Josan
-DOS: John Chetauya
-MO: Aleix Febas, Nico Castro
-OOS: Nicolás Fernández
-SĞK: Josan
-SLK: Tete Morente
-SNT: Mourad El Ghezouani, Rafa Mir
-LEVANTE
-KL: Andrés Fernández, Pablo Campos
-STP: Unai Elgezabal, Adrián de la Fuente
-SLB: Manu Sánchez
-SĞB: Xavi Grande
-DOS: Oriol Rey
-MO: Pablo Martínez, Sergio Lozano
-OOS: Carlos Álvarez
-SĞK: Iván Romero
-SLK: José Luis Morales
-SNT: Roger Brugué, Dani Gómez
-RACING SANTANDER
-KL: Jokin Ezkieta, Miquel Parera
-STP: Manu Hernando, Rubén Alves
-SLB: Saúl García
-SĞB: Marco Sangalli
-DOS: Íñigo Sainz-Maza
-MO: Íñigo Vicente, Aritz Aldasoro
-OOS: Pablo Rodríguez
-SĞK: Andrés Martín
-SLK: Suleiman Camara
-SNT: Juan Carlos Arana, Asier Villalibre
-MÁLAGA
-KL: Alfonso Herrero, Carlos López
-STP: Nelson Monte, Juande Rivas
-SLB: Víctor García
-SĞB: Jokin Gabilondo
-DOS: Luismi Sánchez
-MO: Dani Lorenzo, Ramón Enríquez
-OOS: David Larrubia
-SĞK: Kevin Villodres
-SLK: Haitam Abaida
-SNT: Dioni, Adrián Niño
-GIRONA
-KL: Paulo Gazzaniga, Juan Carlos
-STP: Daley Blind, David López
-SLB: Miguel Gutiérrez
-SĞB: Arnau Martínez
-DOS: Axel Witsel
-MO: Iván Martín, Yangel Herrera
-OOS: Portu
-SĞK: Viktor Tsygankov
-SLK: Bryan Gil
-SNT: Abel Ruiz, Bojan Miovski
+            // BORUSSIA DORTMUND
+            { name: "Nico Schlotterbeck", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "DF", rating: 87 },
+            { name: "Gregor Kobel", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "KL", rating: 87 },
+            { name: "Felix Nmecha", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "OS", rating: 85 },
+            { name: "Serhou Guirassy", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "FV", rating: 85 },
+            { name: "Waldemar Anton", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "DF", rating: 84 },
+            { name: "Julian Ryerson", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "DF", rating: 82 },
+            { name: "Joey Veerman", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "OS", rating: 82 },
+            { name: "Marcel Sabitzer", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "OS", rating: 81 },
+            { name: "Emre Can", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "OS", rating: 81 },
+            { name: "Maximilian Beier", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "FV", rating: 81 },
+            { name: "Ramy Bensebaini", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "DF", rating: 79 },
+            { name: "Daniel Svensson", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "DF", rating: 79 },
+            { name: "Giannis Konstantelias", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "OS", rating: 79 },
+            { name: "Carney Chukwuemeka", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "OS", rating: 78 },
+            { name: "Fábio Silva", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "FV", rating: 78 },
+            { name: "Jobe Bellingham", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "OS", rating: 77 },
+            { name: "Konstantinos Karetsas", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "OS", rating: 76 },
+            { name: "Alexander Meyer", team: "BORUSSIA DORTMUND", league: "bundesliga", pos: "KL", rating: 74 },
 
-SERIE A :
-INTER
-KL: Yann Sommer, Josep Martínez
-STP: Alessandro Bastoni, Francesco Acerbi, Benjamin Pavard
-SLB: Federico Dimarco, Carlos Augusto
-SĞB: Denzel Dumfries, Matteo Darmian
-DOS: Hakan Çalhanoğlu
-MO: Nicolò Barella, Davide Frattesi, Piotr Zieliński
-OOS: Henrikh Mkhitaryan
-SĞK: Luis Henrique
-SLK: Marcus Thuram
-SNT: Lautaro Martínez, Ange-Yoan Bonny
-JUVENTUS
-KL: Michele Di Gregorio, Mattia Perin
-STP: Bremer, Federico Gatti, Lloyd Kelly
-SLB: Andrea Cambiaso, Juan Cabal
-SĞB: Pierre Kalulu, João Mário
-DOS: Manuel Locatelli
-MO: Khéphren Thuram, Teun Koopmeiners
-OOS: Kenan Yıldız
-SĞK: Francisco Conceição
-SLK: Edon Zhegrova
-SNT: Dušan Vlahović, Randal Kolo Muani, Nick Woltemade
-AC MILAN
-KL: Mike Maignan, Marco Sportiello
-STP: Fikayo Tomori, Strahinja Pavlović, Malick Thiaw
-SLB: Pervis Estupiñán
-SĞB: Kyle Walker, Emerson Royal
-DOS: Youssouf Fofana
-MO: Tijjani Reijnders, Ruben Loftus-Cheek, Yunus Musah
-OOS: Christian Pulisic
-SĞK: Samuel Chukwueze
-SLK: Rafael Leão, Noah Okafor
-SNT: Santiago Giménez, Tammy Abraham
-NAPOLI
-KL: Alex Meret, Vanja Milinković-Savić
-STP: Alessandro Buongiorno, Amir Rrahmani, Sam Beukema
-SLB: Leonardo Spinazzola, Mathías Olivera
-SĞB: Giovanni Di Lorenzo, Pasquale Mazzocchi
-DOS: Stanislav Lobotka
-MO: Scott McTominay, André-Frank Zambo Anguissa, Billy Gilmour
-OOS: Kevin De Bruyne
-SĞK: Matteo Politano, David Neres
-SLK: Noa Lang, Alisson Santos
-SNT: Rasmus Højlund, Lorenzo Lucca
-AS ROMA
-KL: Mile Svilar, Pierluigi Gollini
-STP: Gianluca Mancini, Evan Ndicka, Mario Hermoso
-SLB: Angeliño, Anass Salah-Eddine
-SĞB: Devyne Rensch, Wesley
-DOS: Bryan Cristante
-MO: Manu Koné, Niccolò Pisilli
-OOS: Lorenzo Pellegrini, Rodrigo Mora
-SĞK: Matías Soulé
-SLK: Paulo Dybala
-SNT: Donyell Malen, Artem Dovbyk
-ATALANTA
-KL: Marco Carnesecchi, Rui Patrício
-STP: Isak Hien, Berat Djimsiti, Odilon Kossounou
-SLB: Davide Zappacosta
-SĞB: Raoul Bellanova
-DOS: Éderson
-MO: Marten de Roon, Mario Pašalić
-OOS: Lazar Samardžić
-SĞK: Charles De Ketelaere
-SLK: Ademola Lookman
-SNT: Gianluca Scamacca, Mateo Retegui
-LAZIO
-KL: Ivan Provedel, Christos Mandas
-STP: Alessio Romagnoli, Mario Gila, Nicolò Casale
-SLB: Luca Pellegrini
-SĞB: Adam Marušić
-DOS: Nicolò Rovella
-MO: Matteo Guendouzi, Fisayo Dele-Bashiru
-OOS: Mattia Zaccagni
-SĞK: Gustav Isaksen
-SLK: Pedro
-SNT: Andrea Pinamonti, Valentín Castellanos
-BOLOGNA
-KL: Łukasz Skorupski, Federico Ravaglia
-STP: Jhon Lucumí, Sam Beukema, Torbjørn Heggem
-SLB: Juan Miranda
-SĞB: Emil Holm
-DOS: Remo Freuler
-MO: Lewis Ferguson, Tommaso Pobega
-OOS: Giovanni Fabbian
-SĞK: Riccardo Orsolini
-SLK: Jonathan Rowe
-SNT: Santiago Castro, Thijs Dallinga
-FIORENTINA
-KL: David de Gea, Pietro Terracciano
-STP: Marin Pongračić, Luca Ranieri, Pablo Marí
-SLB: Robin Gosens
-SĞB: Dodô
-DOS: Rolando Mandragora
-MO: Nicolò Fagioli, Cher Ndour
-OOS: Albert Guðmundsson
-SĞK: Andrea Colpani
-SLK: Nicolò Zaniolo
-SNT: Moise Kean, Roberto Piccoli
-COMO
-KL: Jean Butez, Pepe Reina
-STP: Marc-Oliver Kempf, Jacobo Ramón
-SLB: Álex Valle
-SĞB: Ivan Smolčić
-DOS: Máximo Perrone
-MO: Lucas da Cunha, Sergi Roberto
-OOS: Nico Paz
-SĞK: Gabriel Strefezza
-SLK: Assane Diao
-SNT: Patrick Cutrone, Álvaro Morata
-TORINO
-KL: Lucas Perri, Diego Mascardi
-STP: Saúl Coco, Ardian Ismajli, Pietro Comuzzo
-SLB: Cristiano Biraghi, Ricardo Rodríguez
-SĞB: Nathan Patterson, Rafik Belghali
-DOS: Emirhan İlkhan
-MO: Rolando Mandragora, Cesare Casadei
-OOS: Nikola Vlašić
-SĞK: Zakaria Aboukhlal
-SLK: Gaetano Oristanio
-SNT: Giovanni Simeone, Ché Adams, Duván Zapata
-UDINESE
-KL: Maduka Okoye, Razvan Sava
-STP: Jaka Bijol, Thomas Kristensen
-SLB: Jordan Zemura
-SĞB: Kingsley Ehizibue
-DOS: Jesper Karlström
-MO: Sandi Lovrić, Arthur Atta
-OOS: Florian Thauvin
-SĞK: Alexis Sánchez
-SLK: Hassane Kamara
-SNT: Lorenzo Lucca, Keinan Davis
-GENOA
-KL: Nicola Leali, Benjamin Siegrist
-STP: Johan Vásquez, Mattia Bani
-SLB: Aarón Martín
-SĞB: Brooke Norton-Cuffy, Kingsley Ehizibue
-DOS: Morten Frendrup
-MO: Ruslan Malinovskyi, Milan Badelj
-OOS: Junior Messias
-SĞK: Vitinha
-SLK: Caleb Ekuban
-SNT: Andrea Pinamonti
-PARMA
-KL: Zion Suzuki, Edoardo Corvi
-STP: Alessandro Circati, Enrico Delprato
-SLB: Emanuele Valeri
-SĞB: Woyo Coulibaly
-DOS: Mandela Keita
-MO: Adrián Bernabé, Simon Sohm
-OOS: Dennis Man
-SĞK: Matteo Cancellieri
-SLK: Pontus Almqvist
-SNT: Mateo Pellegrino, Ange-Yoan Bonny
-CAGLIARI
-KL: Elia Caprile, Simone Scuffet
-STP: Yerry Mina, Sebastiano Luperto
-SLB: Tommaso Augello
-SĞB: Gabriele Zappa
-DOS: Alessandro Deiola
-MO: Michel Adopo, Ibrahim Sulemana
-OOS: Gianluca Gaetano
-SĞK: Zito Luvumbo
-SLK: Mattia Felici
-SNT: Roberto Piccoli, Sebastiano Esposito
-LECCE
-KL: Wladimiro Falcone, Jasper Samooja
-STP: Federico Baschirotto, Kialonda Gaspar
-SLB: Antonino Gallo
-SĞB: Danilo Veiga
-DOS: Ylber Ramadani
-MO: Lassana Coulibaly, Balthazar Pierret
-OOS: Medon Berisha
-SĞK: Tete Morente
-SLK: Lameck Banda
-SNT: Nikola Krstović, Francesco Camarda
-SASSUOLO
-KL: Arijanet Murić, Giacomo Satalino
-STP: Jay Idzes, Tarik Muharemović
-SLB: Josh Doig
-SĞB: Jeremy Toljan
-DOS: Nemanja Matić
-MO: Kristian Thorstvedt, Ismaël Koné
-OOS: Domenico Berardi
-SĞK: Armand Laurienté
-SLK: Cristian Volpato
-SNT: Andrea Pinamonti, Sebastiano Esposito
-FROSINONE
-KL: Stefano Turati
-STP: Fabio Monterisi, Ilario Monterisi
-SLB: Riccardo Marchizza
-SĞB: Anthony Oyono
-DOS: Luca Mazzitelli
-MO: Marco Brescianini, Giuseppe Caso
-OOS: Matías Soulé
-SĞK: Luigi Canotto
-SLK: Giuseppe Ambrosino
-SNT: Walid Cheddira, Francesco Gelli
-MONZA
-KL: Stefano Turati, Semuel Pizzignacco
-STP: Armando Izzo, Andrea Carboni
-SLB: Georgios Kyriakopoulos
-SĞB: Pedro Pereira
-DOS: Warren Bondo
-MO: Matteo Pessina, Andrea Colpani
-OOS: Gianluca Caprari
-SĞK: Patrick Ciurria
-SLK: Dany Mota
-SNT: Patrick Cutrone, Andrea Petagna
-VENEZIA
-KL: Jesse Joronen, Filip Stanković
-STP: Jay Idzes, Michael Svoboda
-SLB: Ridgeciano Haps
-SĞB: Antonio Candela
-DOS: Tanner Tessmann
-MO: Hans Nicolussi Caviglia, Gianluca Busio
-OOS: Gaetano Oristanio
-SĞK: Dennis Johnsen
-SLK: Mikael Egill Ellertsson
-SNT: Joel Pohjanpalo, Christian Gytkjær
+            // PSG
+            { name: "Ousmane Dembélé", team: "PSG", league: "ligue1", pos: "FV", rating: 90 },
+            { name: "Vitinha", team: "PSG", league: "ligue1", pos: "OS", rating: 90 },
+            { name: "Khvicha Kvaratskhelia", team: "PSG", league: "ligue1", pos: "FV", rating: 89 },
+            { name: "Nuno Mendes", team: "PSG", league: "ligue1", pos: "DF", rating: 89 },
+            { name: "Willian Pacho", team: "PSG", league: "ligue1", pos: "DF", rating: 89 },
+            { name: "João Neves", team: "PSG", league: "ligue1", pos: "OS", rating: 88 },
+            { name: "Achraf Hakimi", team: "PSG", league: "ligue1", pos: "DF", rating: 88 },
+            { name: "Marquinhos", team: "PSG", league: "ligue1", pos: "DF", rating: 87 },
+            { name: "Fabián Ruiz", team: "PSG", league: "ligue1", pos: "OS", rating: 86 },
+            { name: "Désiré Doué", team: "PSG", league: "ligue1", pos: "FV", rating: 86 },
+            { name: "Bradley Barcola", team: "PSG", league: "ligue1", pos: "FV", rating: 85 },
+            { name: "Ferran Torres", team: "PSG", league: "ligue1", pos: "FV", rating: 84 },
+            { name: "Warren Zaïre-Emery", team: "PSG", league: "ligue1", pos: "OS", rating: 83 },
+            { name: "Matvey Safonov", team: "PSG", league: "ligue1", pos: "KL", rating: 83 },
+            { name: "Lucas Hernández", team: "PSG", league: "ligue1", pos: "DF", rating: 81 },
+            { name: "Maghnes Akliouche", team: "PSG", league: "ligue1", pos: "OS", rating: 81 },
+            { name: "Lucas Chevalier", team: "PSG", league: "ligue1", pos: "KL", rating: 80 },
+            { name: "Lucas Digne", team: "PSG", league: "ligue1", pos: "DF", rating: 80 },
+            { name: "Illia Zabarnyi", team: "PSG", league: "ligue1", pos: "DF", rating: 80 },
+            { name: "Senny Mayulu", team: "PSG", league: "ligue1", pos: "OS", rating: 79 },
+            { name: "Lucas Beraldo", team: "PSG", league: "ligue1", pos: "DF", rating: 79 },
+            { name: "Mika Godts", team: "PSG", league: "ligue1", pos: "FV", rating: 78 },
+            { name: "Ibrahim Mbaye", team: "PSG", league: "ligue1", pos: "FV", rating: 76 },
+            { name: "Renato Sanches", team: "PSG", league: "ligue1", pos: "OS", rating: 75 },
 
-LEAGUE 1 :
-PARIS SAINT-GERMAIN (PSG)
-KL: Lucas Chevalier, Matvey Safonov
-STP: Marquinhos, Willian Pacho, Lucas Beraldo
-SLB: Nuno Mendes
-SĞB: Achraf Hakimi
-DOS: João Neves
-MO: Vitinha, Warren Zaïre-Emery, Fabián Ruiz
-OOS: Désiré Doué
-SĞK: Ousmane Dembélé
-SLK: Bradley Barcola
-SNT: Gonçalo Ramos, Ferran Torres
-OLYMPIQUE DE MARSEILLE
-KL: Gerónimo Rulli
-STP: Leonardo Balerdi, Nayef Aguerd
-SLB: Quentin Merlin
-SĞB: Amir Murillo
-DOS: Pierre-Emile Højbjerg
-MO: Adrien Rabiot, Geoffrey Kondogbia
-OOS: Mason Greenwood
-SĞK: Ismaïla Sarr
-SLK: Igor Paixão
-SNT: Amine Gouiri, Pierre-Emerick Aubameyang
-AS MONACO
-KL: Philipp Köhn, Lukas Hradecky
-STP: Thilo Kehrer, Mohammed Salisu
-SLB: Caio Henrique
-SĞB: Vanderson
-DOS: Denis Zakaria
-MO: Lamine Camara, Aladji Bamba
-OOS: Maghnes Akliouche, Aleksandr Golovin
-SĞK: Ansu Fati
-SLK: Takumi Minamino
-SNT: Folarin Balogun, Mika Biereth, Matthis Abline
-OLYMPIQUE LYONNAIS
-KL: Lucas Perri, Rémy Descamps
-STP: Moussa Niakhaté, Clinton Mata
-SLB: Nicolás Tagliafico
-SĞB: Ainsley Maitland-Niles
-DOS: Tyler Morton
-MO: Corentin Tolisso, Tanner Tessmann
-OOS: Rayan Cherki
-SĞK: Malick Fofana
-SLK: Ernest Nuamah
-SNT: Georges Mikautadze, Endrick
-LILLE OSC
-KL: Berke Özer, Vito Mannone
-STP: Alexsandro, Aïssa Mandi
-SLB: Gabriel Gudmundsson
-SĞB: Thomas Meunier
-DOS: Benjamin André
-MO: Hákon Arnar Haraldsson, Ngal'ayel Mukau
-OOS: Angel Gomes
-SĞK: Edon Zhegrova
-SLK: Matias Fernandez-Pardo
-SNT: Jonathan David, Olivier Giroud
-RC LENS
-KL: Brice Samba
-STP: Facundo Medina, Kevin Danso
-SLB: Deiver Machado
-SĞB: Przemysław Frankowski
-DOS: Nampalys Mendy
-MO: Andy Diouf, Adrien Thomasson
-OOS: Angelo Fulgini
-SĞK: Florian Sotoca
-SLK: Wesley Saïd
-SNT: Elye Wahi
-OGC NICE
-KL: Marcin Bułka
-STP: Dante, Jean-Clair Todibo
-SLB: Melvin Bard
-SĞB: Jonathan Clauss
-DOS: Hicham Boudaoui
-MO: Morgan Sanson, Tanguy Ndombele
-OOS: Sofiane Diop
-SĞK: Jérémie Boga
-SLK: Mohamed-Ali Cho
-SNT: Terem Moffi, Evann Guessand
-STADE RENNAIS
-KL: Brice Samba, Steve Mandanda
-STP: Anthony Rouault, Jérémy Jacquet
-SLB: Adrien Truffert
-SĞB: Lorenz Assignon
-DOS: Baptiste Santamaria
-MO: Seko Fofana, Valentin Rongier
-OOS: Ludovic Blas
-SĞK: Arnaud Kalimuendo
-SLK: Amine Gouiri
-SNT: Esteban Lepaul, Breel Embolo
-RC STRASBOURG
-KL: Djordje Petrović
-STP: Mamadou Sarr, Ismaël Doukouré
-SLB: Ben Chilwell
-SĞB: Guéla Doué
-DOS: Andrey Santos
-MO: Habib Diarra, Valentín Barco
-OOS: Diego Moreira
-SĞK: Dilane Bakwa
-SLK: Martial Godo
-SNT: Emanuel Emegha, Conrad Harder
-STADE BRESTOIS
-KL: Marco Bizot
-STP: Brendan Chardonnet, Lilian Brassier
-SLB: Bradley Locko
-SĞB: Kenny Lala
-DOS: Hugo Magnetti
-MO: Pierre Lees-Melou, Mahdi Camara
-OOS: Romain Del Castillo
-SĞK: Romain Faivre
-SLK: Mama Baldé
-SNT: Ludovic Ajorque, Djylian N'Guessan
-TOULOUSE FC
-KL: Guillaume Restes
-STP: Rasmus Nicolaisen, Charlie Cresswell
-SLB: Gabriel Suazo
-SĞB: Djibril Sidibé
-DOS: Cristian Cásseres Jr.
-MO: Vincent Sierro, Niklas Schmidt
-OOS: Yann Gboho
-SĞK: Aron Dønnum
-SLK: Shavy Babicka
-SNT: Frank Magri
-FC NANTES
-KL: Alban Lafont
-STP: Jean-Charles Castelletto, Nicolas Pallois
-SLB: Nicolas Cozza
-SĞB: Marcus Coco
-DOS: Pedro Chirivella
-MO: Douglas Augusto, Johann Lepenant
-OOS: Florent Mollet
-SĞK: Moses Simon
-SLK: Matthis Abline
-SNT: Mostafa Mohamed
-FC LORIENT
-KL: Yvon Mvogo
-STP: Montassar Talbi, Julien Laporte
-SLB: Darlin Yongwa
-SĞB: Théo Le Bris
-DOS: Laurent Abergel
-MO: Jean-Victor Makengo
-OOS: Pablo Pagis
-SĞK: Aiyegun Tosin
-SLK: Eli Junior Kroupi
-SNT: Ibrahima Baldé
-ANGERS SCO
-KL: Yahia Fofana
-STP: Jordan Lefort, Ousmane Camara
-SLB: Florent Hanin
-SĞB: Carlens Arcus
-DOS: Haris Belkebla
-MO: Himad Abdelli, Yassin Belkhdim
-OOS: Farid El Melali
-SĞK: Jim Allevinah
-SLK: Amine Sbaï
-SNT: Esteban Lepaul
-AJ AUXERRE
-KL: Donovan Léon
-STP: Jubal, Sinaly Diomandé
-SLB: Gideon Mensah
-SĞB: Paul Joly
-DOS: Elisha Owusu
-MO: Kévin Danois, Hamed Junior Traorè
-OOS: Gaëtan Perrin
-SĞK: Lassine Sinayoko
-SLK: Gauthier Hein
-SNT: Florian Ayé, Cameron Archer
-LE HAVRE AC
-KL: Arthur Desmas
-STP: Gautier Lloris, Étienne Youte Kinkoué
-SLB: Christopher Opéri
-SĞB: Loïc Négo
-DOS: Abdoulaye Touré
-MO: Yassine Kechta, Rassoul Ndiaye
-OOS: Josué Casimir
-SĞK: Issa Soumaré
-SLK: André Ayew
-SNT: Emmanuel Sabbi
-PARIS FC
-KL: Obed Nkambadio
-STP: Mamadou Mbow, Timothée Kolodziejczak
-SLB: Thibault De Smet
-SĞB: Adama Camara
-DOS: Maxime Lopez
-MO: Ilan Kebbal, Vincent Marchetti
-OOS: Moses Simon
-SĞK: Julien Lopez
-SLK: Alimami Gory
-SNT: Jean-Philippe Krasso, Willem Geubbels
-LE MANS FC
-KL: Ewan Hatfout
-STP: Harold Voyer, Alexandre Lauray
-SLB: Enzo Le Fée
-SĞB: Antoine Rabillard
-DOS: Edwin Quarshie
-MO: Dame Gueye, Antoine Rabillard
-OOS: Thibault Rambaud
-SĞK: Patrick Ouotro
-SLK: Lucas Calodat
-SNT: Nicolas Kocik
-ESTAC TROYES
-KL: Nicolas Lemaitre, Patrick Beach
-STP: Adil Rami, Ismaël Boura
-SLB: Yasser Larouci
-SĞB: Thierno Baldé
-DOS: Rominigue Kouamé
-MO: Xavier Chavalerin, Martin Adeline
-OOS: Rafiki Saïd
-SĞK: Cyriaque Irié
-SLK: Alexis Lefebvre
-SNT: Jérémy Le Douaron
+            // REAL MADRID
+            { name: "Kylian Mbappé", team: "REAL MADRID", league: "laliga", pos: "FV", rating: 91 },
+            { name: "Thibaut Courtois", team: "REAL MADRID", league: "laliga", pos: "KL", rating: 90 },
+            { name: "Jude Bellingham", team: "REAL MADRID", league: "laliga", pos: "OS", rating: 90 },
+            { name: "Vinícius Júnior", team: "REAL MADRID", league: "laliga", pos: "FV", rating: 89 },
+            { name: "Federico Valverde", team: "REAL MADRID", league: "laliga", pos: "OS", rating: 87 },
+            { name: "Marc Cucurella", team: "REAL MADRID", league: "laliga", pos: "DF", rating: 86 },
+            { name: "Trent Alexander-Arnold", team: "REAL MADRID", league: "laliga", pos: "DF", rating: 84 },
+            { name: "Aurélien Tchouaméni", team: "REAL MADRID", league: "laliga", pos: "OS", rating: 84 },
+            { name: "Éder Militão", team: "REAL MADRID", league: "laliga", pos: "DF", rating: 84 },
+            { name: "Rodrygo", team: "REAL MADRID", league: "laliga", pos: "FV", rating: 84 },
+            { name: "Ibrahima Konaté", team: "REAL MADRID", league: "laliga", pos: "DF", rating: 84 },
+            { name: "Bernardo Silva", team: "REAL MADRID", league: "laliga", pos: "OS", rating: 84 },
+            { name: "Denzel Dumfries", team: "REAL MADRID", league: "laliga", pos: "DF", rating: 83 },
+            { name: "Antonio Rüdiger", team: "REAL MADRID", league: "laliga", pos: "DF", rating: 83 },
+            { name: "Arda Güler", team: "REAL MADRID", league: "laliga", pos: "OS", rating: 90 },
+            { name: "Eduardo Camavinga", team: "REAL MADRID", league: "laliga", pos: "OS", rating: 81 },
+            { name: "Álvaro Carreras", team: "REAL MADRID", league: "laliga", pos: "DF", rating: 81 },
+            { name: "Dean Huijsen", team: "REAL MADRID", league: "laliga", pos: "DF", rating: 81 },
+            { name: "Brahim Díaz", team: "REAL MADRID", league: "laliga", pos: "OS", rating: 81 },
+            { name: "Ferland Mendy", team: "REAL MADRID", league: "laliga", pos: "DF", rating: 80 },
+            { name: "Andriy Lunin", team: "REAL MADRID", league: "laliga", pos: "KL", rating: 80 },
+            { name: "Endrick", team: "REAL MADRID", league: "laliga", pos: "FV", rating: 79 },
+            { name: "Raúl Asencio", team: "REAL MADRID", league: "laliga", pos: "DF", rating: 78 },
+            { name: "Carlos Espí", team: "REAL MADRID", league: "laliga", pos: "FV", rating: 77 },
 
-BUNDESLIGA :
-BAYERN MÜNİH
-KL: Manuel Neuer, Jonas Urbig, Sven Ulreich
-STP: Dayot Upamecano, Min-jae Kim, Jonathan Tah, Hiroki Ito
-SLB: Alphonso Davies, Nathaniel Brown
-SĞB: Sacha Boey, Josip Stanišić, Konrad Laimer
-DOS: Joshua Kimmich, Aleksandar Pavlović
-MO: Tom Bischof, Ismael Saibari
-OOS: Jamal Musiala, Lennart Karl
-SĞK: Michael Olise, Serge Gnabry
-SLK: Luis Díaz
-SNT: Harry Kane
-BORUSSIA DORTMUND
-KL: Gregor Kobel, Patrick Drewes, Alexander Meyer, Diant Ramaj
-STP: Nico Schlotterbeck, Waldemar Anton, Ramy Bensebaini
-SLB: Daniel Svensson
-SĞB: Julian Ryerson, Yan Couto
-DOS: Emre Can
-MO: Jobe Bellingham, Felix Nmecha, Marcel Sabitzer, Joey Veerman
-OOS: Carney Chukwuemeka, Ethan Nwaneri, Giannis Konstantelias
-SĞK: Maximilian Beier
-SLK: Fábio Silva
-SNT: Serhou Guirassy, Samuele Inácio
-RB LEIPZIG
-KL: Péter Gulácsi, Maarten Vandevoordt
-STP: Willi Orbán, Castello Lukeba
-SLB: David Raum
-SĞB: Benjamin Henrichs
-DOS: Xaver Schlager
-MO: Amadou Haidara, Nicolas Seiwald
-OOS: Xavi Simons
-SĞK: Antonio Nusa
-SLK: Christoph Baumgartner
-SNT: Loïs Openda, Benjamin Šeško
-BAYER LEVERKUSEN
-KL: Lukáš Hrádecký, Matej Kovář
-STP: Jonathan Tah, Edmond Tapsoba
-SLB: Alejandro Grimaldo
-SĞB: Jeremie Frimpong
-DOS: Granit Xhaka
-MO: Exequiel Palacios, Robert Andrich
-OOS: Florian Wirtz
-SĞK: Nathan Tella
-SLK: Amine Adli
-SNT: Patrik Schick, Victor Boniface
-EINTRACHT FRANKFURT
-KL: Kevin Trapp, Kauã Santos
-STP: Robin Koch, Arthur Theate
-SLB: Nathaniel Brown
-SĞB: Rasmus Kristensen
-DOS: Ellyes Skhiri
-MO: Hugo Larsson, Mario Götze
-OOS: Can Uzun
-SĞK: Ansgar Knauff
-SLK: Jean-Mattéo Bahoya
-SNT: Hugo Ekitike, Jonathan Burkardt
-VfB STUTTGART
-KL: Alexander Nübel, Fabian Bredlow
-STP: Jeff Chabot, Ameen Al-Dakhil
-SLB: Maximilian Mittelstädt
-SĞB: Josha Vagnoman, Lorenz Assignon
-DOS: Atakan Karazor
-MO: Angelo Stiller, Chema Andrés
-OOS: Bilal El Khannouss
-SĞK: Jamie Leweling
-SLK: Chris Führich
-SNT: Deniz Undav, Ermedin Demirović
-SC FREIBURG
-KL: Noah Atubolu, Florian Müller
-STP: Matthias Ginter, Philipp Lienhart
-SLB: Christian Günter
-SĞB: Lukas Kübler
-DOS: Maximilian Eggestein
-MO: Nicolas Höfler, Patrick Osterhage
-OOS: Vincenzo Grifo
-SĞK: Ritsu Doan
-SLK: Eren Dinkçi
-SNT: Lucas Höler, Michael Gregoritsch
-TSG HOFFENHEIM
-KL: Oliver Baumann, Luca Philipp
-STP: Ozan Kabak, Robin Hranáč
-SLB: Bernardo
-SĞB: Vladimir Coufal
-DOS: Leon Avdullahu
-MO: Wouter Burger, Alexander Prass
-OOS: Andrej Kramarić, Muhammed Damar
-SĞK: Bazoumana Touré
-SLK: Fisnik Asllani
-SNT: Adam Hložek, Gift Orban
-WERDER BREMEN
-KL: Karl Hein, Markus Kolke
-STP: Marco Friedl, Niklas Stark
-SLB: Olivier Deman, Felix Agu
-SĞB: Mitchell Weiser
-DOS: Senne Lynen
-MO: Jens Stage, Romano Schmid
-OOS: Marco Grüll
-SĞK: Samuel Mbangula
-SLK: Justin Njinmah
-SNT: Keke Topp, Dawid Kownacki
-BORUSSIA MÖNCHENGLADBACH
-KL: Moritz Nicolas, Tobias Sippel
-STP: Nico Elvedi, Kevin Diks
-SLB: Lukas Ullrich
-SĞB: Joe Scally
-DOS: Philipp Sander
-MO: Florian Neuhaus, Kevin Stöger
-OOS: Giovanni Reyna
-SĞK: Franck Honorat
-SLK: Robin Hack
-SNT: Tim Kleindienst, Shuto Machino
-1. FC UNION BERLIN
-KL: Frederik Rønnow, Carl Klaus, Matheo Raab
-STP: Leopold Querfeld, Marvin Friedrich
-SLB: Derrick Köhn, Tom Rothe
-SĞB: Josip Juranović, Christopher Trimmel
-DOS: Rani Khedira, Aljoscha Kemlein
-MO: András Schäfer, Janik Haberer
-OOS: Woo-yeong Jeong
-SĞK: Tim Skarke
-SLK: Robert Skov
-SNT: Andrej Ilić, Oliver Burke
-1. FSV MAINZ 05
-KL: Robin Zentner, Lasse Rieß
-STP: Stefan Bell, Andreas Hanche-Olsen
-SLB: Phillipp Mwene
-SĞB: Danny da Costa, Silvan Widmer
-DOS: Kaishu Sano, Lennard Maloney
-MO: Nadiem Amiri, Paul Nebel
-OOS: Lee Jae-sung
-SĞK: William Bøving
-SLK: Sheraldo Becker
-SNT: Phillip Tietz, Benedict Hollerbach
-HAMBURGER SV
-KL: Daniel Heuer Fernandes, Sander Tangvik
-STP: Warmed Omari, Jordan Torunarigha
-SLB: Miro Muheim
-SĞB: Bakery Jatta
-DOS: Daniel Elfadli
-MO: Albert Sambi Lokonga, Nicolai Remberg
-OOS: Albert Grønbæk
-SĞK: Jean-Luc Dompé
-SLK: Fabio Baldé
-SNT: Yussuf Poulsen, Rayan Philippe
-1. FC KÖLN
-KL: Marvin Schwäbe, Ron-Robert Zieler
-STP: Joël Schmied, Timo Hübers
-SLB: Leart Paqarada
-SĞB: Sebastian Sebulonsen
-DOS: Tom Krauß
-MO: Ísak Jóhannesson, Eric Martel
-OOS: Luca Waldschmidt
-SĞK: Jan Thielmann
-SLK: Linton Maina
-SNT: Ragnar Ache, Marius Bülter
-FC AUGSBURG
-KL: Finn Dahmen, Nediljko Labrović
-STP: Jeffrey Gouweleeuw, Chrislain Matsima
-SLB: Mads Pedersen
-SĞB: Kevin Mbabu
-DOS: Kristijan Jakić
-MO: Elvis Rexhbeçaj, Arne Maier
-OOS: Alexis Claude-Maurice
-SĞK: Mert Kömür
-SLK: Samuel Essende
-SNT: Phillip Tietz
-VfL WOLFSBURG
-KL: Kamil Grabara, Marius Müller
-STP: Moritz Jenz, Konstantinos Koulierakis
-SLB: Joakim Mæhle
-SĞB: Kilian Fischer
-DOS: Maximilian Arnold
-MO: Bence Dárdai, Mattias Svanberg
-OOS: Lovro Majer
-SĞK: Patrick Wimmer
-SLK: Mohamed Amoura
-SNT: Jonas Wind, Tiago Tomás
-FC ST. PAULI
-KL: Nikola Vasilj, Sören Ahlers
-STP: Eric Smith, Hauke Wahl
-SLB: Philipp Treu
-SĞB: Manolis Saliakas
-DOS: Jackson Irvine
-MO: Carlo Boukhalfa, James Sands
-OOS: Johannes Eggestein
-SĞK: Danel Sinani
-SLK: Elias Saad
-SNT: Andreas Hountondji
-1. FC HEIDENHEIM
-KL: Kevin Müller, Diant Ramaj
-STP: Patrick Mainka, Benedikt Gimber
-SLB: Jonas Föhrenbach
-SĞB: Omar Traoré
-DOS: Jan Schöppner
-MO: Niklas Dorsch, Adrian Beck
-OOS: Paul Wanner
-SĞK: Mathias Honsak
-SLK: Eren Dinkçi
-SNT: Tim Kleindienst
-SV ELVERSBERG
-KL: Nicolas Kristof, Frank Lehmann
-STP: Frederik Jäkel, Robin Fellhauer
-SLB: Maurice Neubauer
-SĞB: Lukas Pinckert
-DOS: Carlo Sickinger
-MO: Semih Şahin, Luca Schnellbacher
-OOS: Jannik Rochelt
-SĞK: Fisnik Asllani
-SLK: Joseph Boyamba
-SNT: Kevin Koffi
+            // BARCELONA
+            { name: "Lamine Yamal", team: "BARCELONA", league: "laliga", pos: "FV", rating: 90 },
+            { name: "Rodri", team: "BARCELONA", league: "laliga", pos: "OS", rating: 90 },
+            { name: "Pedri", team: "BARCELONA", league: "laliga", pos: "OS", rating: 90 },
+            { name: "Raphinha", team: "BARCELONA", league: "laliga", pos: "FV", rating: 88 },
+            { name: "Pau Cubarsí", team: "BARCELONA", league: "laliga", pos: "DF", rating: 86 },
+            { name: "Joan García", team: "BARCELONA", league: "laliga", pos: "KL", rating: 86 },
+            { name: "Frenkie de Jong", team: "BARCELONA", league: "laliga", pos: "OS", rating: 86 },
+            { name: "Fermín López", team: "BARCELONA", league: "laliga", pos: "OS", rating: 85 },
+            { name: "Eric García", team: "BARCELONA", league: "laliga", pos: "DF", rating: 85 },
+            { name: "Jules Koundé", team: "BARCELONA", league: "laliga", pos: "DF", rating: 85 },
+            { name: "Dani Olmo", team: "BARCELONA", league: "laliga", pos: "OS", rating: 84 },
+            { name: "João Cancelo", team: "BARCELONA", league: "laliga", pos: "DF", rating: 83 },
+            { name: "Gavi", team: "BARCELONA", league: "laliga", pos: "OS", rating: 83 },
+            { name: "Anthony Gordon", team: "BARCELONA", league: "laliga", pos: "FV", rating: 82 },
+            { name: "Alejandro Balde", team: "BARCELONA", league: "laliga", pos: "DF", rating: 82 },
+            { name: "Karim Adeyemi", team: "BARCELONA", league: "laliga", pos: "FV", rating: 82 },
+            { name: "Wojciech Szczęsny", team: "BARCELONA", league: "laliga", pos: "KL", rating: 81 },
+            { name: "Gerard Martín", team: "BARCELONA", league: "laliga", pos: "DF", rating: 79 },
+            { name: "Andreas Christensen", team: "BARCELONA", league: "laliga", pos: "DF", rating: 79 },
+            { name: "Marc Bernal", team: "BARCELONA", league: "laliga", pos: "OS", rating: 78 },
+            { name: "Marc Casadó", team: "BARCELONA", league: "laliga", pos: "OS", rating: 78 },
+            { name: "Gabriel Jesus", team: "BARCELONA", league: "laliga", pos: "FV", rating: 79 },
 
-SÜPER LİG :
-TÜRKİYE SÜPER LİG 2026-2027
-RESMÎ A TAKIM KADROLARI
-BEŞİKTAŞ
-Ahmet Sami Bircan
-Alexander Nübel
-Emmanuel Agbadou
-Can Keleş
-Doğan Alemdar
-Dušan Vlahović
-Emir Yaşar
-Emirhan Topçu
-Ernest Poku
-Fabio Miretti
-Hyeongyu Oh
-Junior Olaitan
-İlhan Fakılı
-Kartal Kayra Yılmaz
-Kassoum Ouattara
-Leandro Trossard
-Michael Murillo
-Milot Rashica
-Wilfred Ndidi
-Orkun Kökçü
-Rıdvan Yılmaz
-Salih Özcan
-Semih Kılıçsoy
-Taylan Bulut
-Tiago Djaló
-Ümit Akdağ
-Václav Černý
-Yasin Özcan
-FENERBAHÇE
-Alaettin Ekici
-Archie Brown
-Bartuğ Elmaz
-Çağrı Hakan Balta
-Dorgeles Nene
-Ederson
-Mert Günok
-İrfan Can Kahveci
-İsmail Yüksek
-Kojo Peprah Oppong
-Marco Asensio
-Mason Greenwood
-Mattéo Guendouzi
-Mert Hakan Yandaş
-Mert Müldür
-Milan Škriniar
-Kerem Aktürkoğlu
-Levent Mercan
-Nathan Aké
-Nelson Semedo
-N'Golo Kanté
-Ognjen Mimović
-Oğuz Aydın
-Ömer Yiğit Tiryakigil
-Romelu Lukaku
-Tarık Çetin
-Vedat Muriqi
-Yiğit Efe Demir
-GALATASARAY
-Abdülkerim Bardakcı
-Aleksei Batrakov
-Arda Ünyay
-Barış Alper Yılmaz
-Berat Luş
-Davinson Sánchez
-Deniz Daniel Gül
-El Chadaille Bitshiabu
-Eren Elmalı
-Eyüp Aydın
-Gabriel Sara
-Günay Güvenç
-Ismail Jakobs
-İlkay Gündoğan
-Jankat Yılmaz
-Kaan Ayhan
-Kazımcan Karataş
-Leroy Sané
-Lesley Ugochukwu
-Lucas Torreira
-Mario Lemina
-Rafael Leão
-Renato Sam-Nhaga
-Roland Sallai
-Uğurcan Çakır
-Victor Osimhen
-Wilfried Singo
-Yunus Akgün
-TRABZONSPOR
-Ahmet Doğan Yıldırım
-Ali Habeşoğlu
-André Onana
-Arsenii Batahov
-Cenk Özkaçar
-Chibuike Nwaiwu
-Cihan Çanak
-Doğuhan Aral Şimşir
-Paul Onuachu
-Ernest Muçi
-Fabio Tavares
-Franculino Djú
-Umut Nayir
-Melih Kabasakal
-Metehan Mimaroğlu
-Mohamed Salah
-Mustafa Eskihellaç
-Noah Saviolo
-Oğuzhan Ertem
-Okay Yokuşlu
-Onuralp Çevikkan
-Ozan Tufan
-Ruslan Malinovskyi
-Samet Akaydin
-Sidny Cabral
-Stefan Savić
-Tim Jabol-Folcarelli
-Wagner Pina
-KOCAELİSPOR
-Aleksandar Jovanović
-Anfernee Dijksteel
-Arda Özyar
-Tanguy Zoukrou
-Bedirhan Yıldız
-Berkan Kutlu
-Bruno Petković
-Daniel Agyei
-Emir Ortakaya
-Florian Ayé
-Gonçalo Sousa
-Haydar Karataş
-Hulisi Destici
-Mahamadou Susoho
-Makana Baku
-Manuel Cafumana
-Massadio Haïdara
-Matej Maglica
-Metehan Altunbaş
-Muharrem Cinan
-Mustafa Ege Bilim
-Onur Öztonga
-Onurcan Piri
-Rigoberto Rivas
-Serhat Öztaşdelen
-Tayfur Bingöl
-Tobias Gulliksen
-Uğur Kaan Yıldız
-SAMSUNSPOR
-Afonso Sousa
-Bedirhan Çetin
-Bilal Bayazıt
-Celil Yüksel
-Efe Yiğit Üstün
-Elayis Tavşan
-Elliot Watt
-Emre Kılınç
-Enes Albak
-Fatih Kaya
-Gabriele Guarino
-Haluk Mustafa Tan
-Igor Drapiński
-Josafat Mendes
-Kouadou Assoumou
-Logi Tomasson
-Mohamed Bayo
-Muhammet Talha Akyüz
-Okan Kocuk
-Oskar Skovbjerg
-Saikuba Jarju
-Samed Onur
-Strahinja Eraković
-Tanguy Coulibaly
-Yalçın Kayan
-Yirigue Sekongo
-Yunus Emre Çift
-`;
+            // ATLÉTICO MADRID
+            { name: "Jan Oblak", team: "ATLÉTICO MADRID", league: "laliga", pos: "KL", rating: 88 },
+            { name: "Julián Álvarez", team: "ATLÉTICO MADRID", league: "laliga", pos: "FV", rating: 86 },
+            { name: "Marcos Llorente", team: "ATLÉTICO MADRID", league: "laliga", pos: "OS", rating: 85 },
+            { name: "Alejandro Grimaldo", team: "ATLÉTICO MADRID", league: "laliga", pos: "DF", rating: 85 },
+            { name: "Morten Hjulmand", team: "ATLÉTICO MADRID", league: "laliga", pos: "OS", rating: 83 },
+            { name: "Pablo Barrios", team: "ATLÉTICO MADRID", league: "laliga", pos: "OS", rating: 83 },
+            { name: "Dávid Hancko", team: "ATLÉTICO MADRID", league: "laliga", pos: "DF", rating: 83 },
+            { name: "Álex Baena", team: "ATLÉTICO MADRID", league: "laliga", pos: "OS", rating: 83 },
+            { name: "Ademola Lookman", team: "ATLÉTICO MADRID", league: "laliga", pos: "FV", rating: 83 },
+            { name: "Alexander Sørloth", team: "ATLÉTICO MADRID", league: "laliga", pos: "FV", rating: 83 },
+            { name: "Giuliano Simeone", team: "ATLÉTICO MADRID", league: "laliga", pos: "DF", rating: 82 },
+            { name: "Juan Musso", team: "ATLÉTICO MADRID", league: "laliga", pos: "KL", rating: 82 },
+            { name: "Cristian Romero", team: "ATLÉTICO MADRID", league: "laliga", pos: "DF", rating: 82 },
+            { name: "José María Giménez", team: "ATLÉTICO MADRID", league: "laliga", pos: "DF", rating: 82 },
+            { name: "Koke", team: "ATLÉTICO MADRID", league: "laliga", pos: "OS", rating: 81 },
+            { name: "Marc Pubill", team: "ATLÉTICO MADRID", league: "laliga", pos: "DF", rating: 81 },
+            { name: "Robin Le Normand", team: "ATLÉTICO MADRID", league: "laliga", pos: "DF", rating: 81 },
+            { name: "Johnny Cardoso", team: "ATLÉTICO MADRID", league: "laliga", pos: "OS", rating: 80 },
+            { name: "Lee Kang-in", team: "ATLÉTICO MADRID", league: "laliga", pos: "OS", rating: 80 },
+            { name: "Thomas Lemar", team: "ATLÉTICO MADRID", league: "laliga", pos: "OS", rating: 77 },
 
-        const database = [];
-        const leagueMap = { "PREMIER LEAGUE": "premier", "LA LIGA": "laliga", "SERIE A": "seriea", "LEAGUE 1": "ligue1", "BUNDESLIGA": "bundesliga", "SÜPER LİG": "superlig" };
+            // INTER MILAN
+            { name: "Lautaro Martínez", team: "INTER MILAN", league: "seriea", pos: "FV", rating: 87 },
+            { name: "Alessandro Bastoni", team: "INTER MILAN", league: "seriea", pos: "DF", rating: 86 },
+            { name: "Federico Dimarco", team: "INTER MILAN", league: "seriea", pos: "DF", rating: 86 },
+            { name: "Nicolò Barella", team: "INTER MILAN", league: "seriea", pos: "OS", rating: 86 },
+            { name: "Hakan Çalhanoğlu", team: "INTER MILAN", league: "seriea", pos: "OS", rating: 86 },
+            { name: "Marcus Thuram", team: "INTER MILAN", league: "seriea", pos: "FV", rating: 85 },
+            { name: "Denzel Dumfries", team: "INTER MILAN", league: "seriea", pos: "DF", rating: 84 },
+            { name: "Piotr Zieliński", team: "INTER MILAN", league: "seriea", pos: "OS", rating: 83 },
+            { name: "Yann Sommer", team: "INTER MILAN", league: "seriea", pos: "KL", rating: 83 },
+            { name: "Henrikh Mkhitaryan", team: "INTER MILAN", league: "seriea", pos: "OS", rating: 82 },
+            { name: "Benjamin Pavard", team: "INTER MILAN", league: "seriea", pos: "DF", rating: 82 },
+            { name: "Francesco Acerbi", team: "INTER MILAN", league: "seriea", pos: "DF", rating: 81 },
+            { name: "Manuel Akanji", team: "INTER MILAN", league: "seriea", pos: "DF", rating: 81 },
+            { name: "Carlos Augusto", team: "INTER MILAN", league: "seriea", pos: "DF", rating: 81 },
+            { name: "Davide Frattesi", team: "INTER MILAN", league: "seriea", pos: "OS", rating: 81 },
+            { name: "Yann Bisseck", team: "INTER MILAN", league: "seriea", pos: "DF", rating: 80 },
+            { name: "Luis Henrique", team: "INTER MILAN", league: "seriea", pos: "FV", rating: 79 },
+            { name: "Petar Sučić", team: "INTER MILAN", league: "seriea", pos: "OS", rating: 79 },
+            { name: "Pio Esposito", team: "INTER MILAN", league: "seriea", pos: "FV", rating: 77 },
+            { name: "Ange-Yoan Bonny", team: "INTER MILAN", league: "seriea", pos: "FV", rating: 77 },
+            { name: "Josep Martínez", team: "INTER MILAN", league: "seriea", pos: "KL", rating: 77 },
+            { name: "Matteo Darmian", team: "INTER MILAN", league: "seriea", pos: "DF", rating: 77 },
+            { name: "Stefan de Vrij", team: "INTER MILAN", league: "seriea", pos: "DF", rating: 76 },
 
-        // SÜPER LİG OYUNCULARI İÇİN "AKILLI MEVKİ SÖZLÜĞÜ"
-        const posDict = {
-            KL: ["NÜBEL", "ALEMDAR", "YAŞAR", "BİRCAN", "EDERSON", "GÜNOK", "ÇETİN", "ÇAKIR", "GÜVENÇ", "ONANA", "ÇEVİKKAN", "JOVANOVIĆ", "PİRİ", "BAYAZIT", "KOCUK", "JANKAT", "ERTEM", "LIVAKOVIĆ", "MUSLERA"],
-            DF: ["TOPÇU", "DJALÓ", "AKDAĞ", "ÖZCAN", "AGBADOU", "OUATTARA", "BROWN", "BALTA", "MÜLDÜR", "ŠKRINIAR", "MERCAN", "AKÉ", "SEMEDO", "DEMİR", "MİMOVİÇ", "BARDAKCI", "ÜNYAY", "SÁNCHEZ", "BITSHIABU", "ELMALI", "AYHAN", "KARATAŞ", "SINGO", "LUŞ", "BATAHOV", "ÖZKAÇAR", "NWAIWU", "SAVIĆ", "AKAYDİN", "CABRAL", "ÖZYAR", "ZOUKROU", "HAÏDARA", "MAGLICA", "ÖZTONGA", "ÇETİN", "ERAKOVIĆ", "ÇİFT", "TOMASSON", "PINA", "BULUT"],
-            FV: ["VLAHOVIĆ", "TROSSARD", "KILIÇSOY", "RASHICA", "POKU", "GREENWOOD", "ASENSIO", "LUKAKU", "AKTÜRKOĞLU", "NENE", "AYDIN", "OSIMHEN", "LEÃO", "SANÉ", "YILMAZ", "AKGÜN", "GÜL", "SALLAI", "SALAH", "ONUACHU", "MUÇI", "TAVARES", "DJÚ", "NAYIR", "PETKOVIĆ", "AYÉ", "RIVAS", "ÖZTAŞDELEN", "TAVŞAN", "KAYA", "BAYO", "THIAGO", "MIOVSKI", "KELEŞ", "OH", "YILDIRIM", "ŞİMŞİR", "ESKİHELLAÇ"],
-            OS: ["KÖKÇÜ", "ÖZCAN", "NDIDI", "MİRETTİ", "OLAITAN", "FAKILI", "KAHVECİ", "YÜKSEK", "KANTÉ", "GUENDOUZI", "YANDAŞ", "ELMAZ", "OPPONG", "SARA", "GÜNDOĞAN", "TORREIRA", "LEMINA", "UGOCHUKWU", "SAM-NHAGA", "BATRAKOV", "ÇANAK", "YOKUŞLU", "TUFAN", "MALINOVSKYI", "JABOL", "KABASAKAL", "MİMAROĞLU", "KUTLU", "AGYEI", "SOUSA", "SUSOHO", "BAKU", "CAFUMANA", "BİNGÖL", "GULLIKSEN", "YILDIZ", "WATT", "KILINÇ", "ONUR", "KAYAN", "EKİCİ"]
-        };
+            // AS ROMA
+            { name: "Paulo Dybala", team: "AS ROMA", league: "seriea", pos: "FV", rating: 85 },
+            { name: "Mile Svilar", team: "AS ROMA", league: "seriea", pos: "KL", rating: 85 },
+            { name: "Gianluca Mancini", team: "AS ROMA", league: "seriea", pos: "DF", rating: 84 },
+            { name: "Donyell Malen", team: "AS ROMA", league: "seriea", pos: "FV", rating: 83 },
+            { name: "Evan Ndicka", team: "AS ROMA", league: "seriea", pos: "DF", rating: 83 },
+            { name: "Manu Koné", team: "AS ROMA", league: "seriea", pos: "OS", rating: 81 },
+            { name: "Bryan Cristante", team: "AS ROMA", league: "seriea", pos: "OS", rating: 81 },
+            { name: "Mario Hermoso", team: "AS ROMA", league: "seriea", pos: "DF", rating: 81 },
+            { name: "Wesley", team: "AS ROMA", league: "seriea", pos: "DF", rating: 80 },
+            { name: "Matías Soulé", team: "AS ROMA", league: "seriea", pos: "FV", rating: 80 },
+            { name: "Lorenzo Pellegrini", team: "AS ROMA", league: "seriea", pos: "OS", rating: 78 },
+            { name: "Nahuel Molina", team: "AS ROMA", league: "seriea", pos: "DF", rating: 77 },
+            { name: "Neil El Aynaoui", team: "AS ROMA", league: "seriea", pos: "OS", rating: 77 },
+            { name: "Santiago Castro", team: "AS ROMA", league: "seriea", pos: "FV", rating: 77 },
+            { name: "Rodrigo Mora", team: "AS ROMA", league: "seriea", pos: "FV", rating: 77 },
+            { name: "Konstantinos Koulierakis", team: "AS ROMA", league: "seriea", pos: "DF", rating: 76 },
+            { name: "Devyne Rensch", team: "AS ROMA", league: "seriea", pos: "DF", rating: 75 },
+            { name: "Anass Salah-Eddine", team: "AS ROMA", league: "seriea", pos: "DF", rating: 75 },
+            { name: "Niccolò Pisilli", team: "AS ROMA", league: "seriea", pos: "OS", rating: 74 },
+            { name: "Pierluigi Gollini", team: "AS ROMA", league: "seriea", pos: "KL", rating: 74 },
+            { name: "Daniele Ghilardi", team: "AS ROMA", league: "seriea", pos: "DF", rating: 74 },
 
-        function guessSuperLigPos(name) {
-            let u = name.toUpperCase("tr-TR");
-            for(let pos in posDict) { for(let key of posDict[pos]) { if(u.includes(key)) return pos; } }
-            return "OS"; // Listedeki tanıyamadıklarına OS verir.
-        }
+            // AC MILAN
+            { name: "Mike Maignan", team: "AC MILAN", league: "seriea", pos: "KL", rating: 87 },
+            { name: "Adrien Rabiot", team: "AC MILAN", league: "seriea", pos: "OS", rating: 85 },
+            { name: "Luka Modrić", team: "AC MILAN", league: "seriea", pos: "OS", rating: 85 },
+            { name: "Christian Pulisic", team: "AC MILAN", league: "seriea", pos: "FV", rating: 83 },
+            { name: "Rafael Leão", team: "AC MILAN", league: "seriea", pos: "FV", rating: 83 },
+            { name: "Mario Gila", team: "AC MILAN", league: "seriea", pos: "DF", rating: 81 },
+            { name: "Youssouf Fofana", team: "AC MILAN", league: "seriea", pos: "OS", rating: 80 },
+            { name: "Alexis Saelemaekers", team: "AC MILAN", league: "seriea", pos: "FV", rating: 80 },
+            { name: "Gonçalo Ramos", team: "AC MILAN", league: "seriea", pos: "FV", rating: 80 },
+            { name: "Christopher Nkunku", team: "AC MILAN", league: "seriea", pos: "FV", rating: 80 },
+            { name: "Fikayo Tomori", team: "AC MILAN", league: "seriea", pos: "DF", rating: 80 },
+            { name: "Matteo Gabbia", team: "AC MILAN", league: "seriea", pos: "DF", rating: 80 },
+            { name: "Ruben Loftus-Cheek", team: "AC MILAN", league: "seriea", pos: "OS", rating: 79 },
+            { name: "Diego Moreira", team: "AC MILAN", league: "seriea", pos: "FV", rating: 79 },
+            { name: "Samuele Ricci", team: "AC MILAN", league: "seriea", pos: "OS", rating: 78 },
+            { name: "Pervis Estupiñán", team: "AC MILAN", league: "seriea", pos: "DF", rating: 78 },
+            { name: "Santiago Giménez", team: "AC MILAN", league: "seriea", pos: "FV", rating: 78 },
+            { name: "Strahinja Pavlović", team: "AC MILAN", league: "seriea", pos: "DF", rating: 78 },
+            { name: "Samuel Chukwueze", team: "AC MILAN", league: "seriea", pos: "FV", rating: 78 },
+            { name: "Ardon Jashari", team: "AC MILAN", league: "seriea", pos: "OS", rating: 76 },
 
-        function generateRating(name, team) {
-            let hash = 0; for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
-            let base = ["REAL MADRID", "BARCELONA", "MANCHESTER CITY", "ARSENAL", "LİVERPOOL", "BAYERN MÜNİH", "INTER", "PSG", "JUVENTUS", "AC MILAN", "BEŞİKTAŞ", "FENERBAHÇE", "GALATASARAY", "TRABZONSPOR"].includes(team.toUpperCase()) ? 79 : 72;
-            let uName = name.toUpperCase();
-            if(["MBAPPÉ", "HAALAND", "VINÍCIUS", "RODRI"].some(x=>uName.includes(x))) return 91;
-            if(["BELLINGHAM", "KANE", "DE BRUYNE"].some(x=>uName.includes(x))) return 90;
-            if(["SALAH", "VAN DIJK"].some(x=>uName.includes(x))) return 89;
-            if(["OSIMHEN", "LEÃO", "EDERSON"].some(x=>uName.includes(x))) return 88;
-            return base + (Math.abs(hash) % 10);
-        }
+            // JUVENTUS
+            { name: "Bremer", team: "JUVENTUS", league: "seriea", pos: "DF", rating: 86 },
+            { name: "Kenan Yıldız", team: "JUVENTUS", league: "seriea", pos: "FV", rating: 84 },
+            { name: "Manuel Locatelli", team: "JUVENTUS", league: "seriea", pos: "OS", rating: 84 },
+            { name: "Khéphren Thuram", team: "JUVENTUS", league: "seriea", pos: "OS", rating: 81 },
+            { name: "Pierre Kalulu", team: "JUVENTUS", league: "seriea", pos: "DF", rating: 81 },
+            { name: "Weston McKennie", team: "JUVENTUS", league: "seriea", pos: "OS", rating: 80 },
+            { name: "Michele Di Gregorio", team: "JUVENTUS", league: "seriea", pos: "KL", rating: 80 },
+            { name: "Andrea Cambiaso", team: "JUVENTUS", league: "seriea", pos: "DF", rating: 80 },
+            { name: "Francisco Conceição", team: "JUVENTUS", league: "seriea", pos: "FV", rating: 80 },
+            { name: "Jonathan David", team: "JUVENTUS", league: "seriea", pos: "FV", rating: 80 },
+            { name: "Nico González", team: "JUVENTUS", league: "seriea", pos: "FV", rating: 79 },
+            { name: "Zeki Çelik", team: "JUVENTUS", league: "seriea", pos: "DF", rating: 79 },
+            { name: "Federico Gatti", team: "JUVENTUS", league: "seriea", pos: "DF", rating: 79 },
+            { name: "Teun Koopmeiners", team: "JUVENTUS", league: "seriea", pos: "OS", rating: 78 },
+            { name: "Douglas Luiz", team: "JUVENTUS", league: "seriea", pos: "OS", rating: 78 },
+            { name: "Jérémie Boga", team: "JUVENTUS", league: "seriea", pos: "FV", rating: 78 },
+            { name: "Edon Zhegrova", team: "JUVENTUS", league: "seriea", pos: "FV", rating: 78 },
+            { name: "Lloyd Kelly", team: "JUVENTUS", league: "seriea", pos: "DF", rating: 77 },
+            { name: "Randal Kolo Muani", team: "JUVENTUS", league: "seriea", pos: "FV", rating: 77 },
+            { name: "Mattia Perin", team: "JUVENTUS", league: "seriea", pos: "KL", rating: 76 },
+            { name: "Jhon Lucumí", team: "JUVENTUS", league: "seriea", pos: "DF", rating: 76 },
+            { name: "Arkadiusz Milik", team: "JUVENTUS", league: "seriea", pos: "FV", rating: 76 },
 
-        let currLeague = "premier", currTeam = "Bilinmeyen";
-        rawDatabaseString.split('\n').map(l => l.trim()).filter(l => l).forEach(line => {
-            let upper = line.toUpperCase().replace(" :", "").replace(":", "");
-            if (leagueMap[upper]) { currLeague = leagueMap[upper]; return; }
-            if (line.includes("TÜRKİYE SÜPER LİG") || line.includes("RESMÎ A TAKIM")) return;
-            
-            if (line.includes(":")) {
-                let parts = line.split(":");
-                let posRaw = parts[0].trim().toUpperCase();
-                let mapped = ["KL"].includes(posRaw) ? "KL" : (["STP","SLB","SĞB"].includes(posRaw) ? "DF" : (["DOS","MO","OOS"].includes(posRaw) ? "OS" : "FV"));
-                parts[1].split(",").map(p => p.trim()).filter(p => p).forEach(p => {
-                    database.push({ name: p, team: currTeam, league: currLeague, pos: mapped, rating: generateRating(p, currTeam) });
-                });
-                return;
-            }
-            
-            if (line === line.toUpperCase()) { currTeam = line; return; }
-            database.push({ name: line, team: currTeam, league: currLeague, pos: guessSuperLigPos(line), rating: generateRating(line, currTeam) });
-        });
+            // NAPOLI
+            { name: "Scott McTominay", team: "NAPOLI", league: "seriea", pos: "OS", rating: 86 },
+            { name: "Kevin De Bruyne", team: "NAPOLI", league: "seriea", pos: "OS", rating: 85 },
+            { name: "Stanislav Lobotka", team: "NAPOLI", league: "seriea", pos: "OS", rating: 83 },
+            { name: "Amir Rrahmani", team: "NAPOLI", league: "seriea", pos: "DF", rating: 83 },
+            { name: "André-Frank Zambo Anguissa", team: "NAPOLI", league: "seriea", pos: "OS", rating: 82 },
+            { name: "Giovanni Di Lorenzo", team: "NAPOLI", league: "seriea", pos: "DF", rating: 82 },
+            { name: "Alex Meret", team: "NAPOLI", league: "seriea", pos: "KL", rating: 81 },
+            { name: "David Neres", team: "NAPOLI", league: "seriea", pos: "FV", rating: 81 },
+            { name: "Alessandro Buongiorno", team: "NAPOLI", league: "seriea", pos: "DF", rating: 81 },
+            { name: "Leonardo Spinazzola", team: "NAPOLI", league: "seriea", pos: "DF", rating: 80 },
+            { name: "Vanja Milinković-Savić", team: "NAPOLI", league: "seriea", pos: "KL", rating: 80 },
+            { name: "Matteo Politano", team: "NAPOLI", league: "seriea", pos: "FV", rating: 80 },
+            { name: "Noa Lang", team: "NAPOLI", league: "seriea", pos: "FV", rating: 79 },
+            { name: "Rasmus Højlund", team: "NAPOLI", league: "seriea", pos: "FV", rating: 78 },
+            { name: "Sam Beukema", team: "NAPOLI", league: "seriea", pos: "DF", rating: 78 },
+            { name: "Mathías Olivera", team: "NAPOLI", league: "seriea", pos: "DF", rating: 77 },
+            { name: "Billy Gilmour", team: "NAPOLI", league: "seriea", pos: "OS", rating: 75 },
+            { name: "Romelu Lukaku", team: "NAPOLI", league: "seriea", pos: "FV", rating: 75 },
+            { name: "Lorenzo Lucca", team: "NAPOLI", league: "seriea", pos: "FV", rating: 75 },
+            { name: "Alisson Santos", team: "NAPOLI", league: "seriea", pos: "FV", rating: 74 },
 
-        // ================= OYUN MOTORU =================
+            // ARSENAL
+            { name: "Gabriel", team: "ARSENAL", league: "premier", pos: "DF", rating: 89 },
+            { name: "William Saliba", team: "ARSENAL", league: "premier", pos: "DF", rating: 88 },
+            { name: "David Raya", team: "ARSENAL", league: "premier", pos: "KL", rating: 88 },
+            { name: "Declan Rice", team: "ARSENAL", league: "premier", pos: "OS", rating: 88 },
+            { name: "Bukayo Saka", team: "ARSENAL", league: "premier", pos: "FV", rating: 87 },
+            { name: "Bruno Guimarães", team: "ARSENAL", league: "premier", pos: "OS", rating: 86 },
+            { name: "Martin Ødegaard", team: "ARSENAL", league: "premier", pos: "OS", rating: 86 },
+            { name: "Viktor Gyökeres", team: "ARSENAL", league: "premier", pos: "FV", rating: 86 },
+            { name: "Martín Zubimendi", team: "ARSENAL", league: "premier", pos: "OS", rating: 84 },
+            { name: "Eberechi Eze", team: "ARSENAL", league: "premier", pos: "FV", rating: 84 },
+            { name: "Ezri Konsa", team: "ARSENAL", league: "premier", pos: "DF", rating: 84 },
+            { name: "Jurriën Timber", team: "ARSENAL", league: "premier", pos: "DF", rating: 84 },
+            { name: "Piero Hincapié", team: "ARSENAL", league: "premier", pos: "DF", rating: 84 },
+            { name: "Mikel Merino", team: "ARSENAL", league: "premier", pos: "OS", rating: 83 },
+            { name: "Riccardo Calafiori", team: "ARSENAL", league: "premier", pos: "DF", rating: 82 },
+            { name: "Christos Tzolis", team: "ARSENAL", league: "premier", pos: "FV", rating: 82 },
+            { name: "Ben White", team: "ARSENAL", league: "premier", pos: "DF", rating: 81 },
+            { name: "Kai Havertz", team: "ARSENAL", league: "premier", pos: "FV", rating: 81 },
+            { name: "Gabriel Martinelli", team: "ARSENAL", league: "premier", pos: "FV", rating: 80 },
+            { name: "Noni Madueke", team: "ARSENAL", league: "premier", pos: "FV", rating: 80 },
+            { name: "Kepa Arrizabalaga", team: "ARSENAL", league: "premier", pos: "KL", rating: 78 },
+            { name: "Myles Lewis-Skelly", team: "ARSENAL", league: "premier", pos: "DF", rating: 78 },
+            { name: "Fábio Vieira", team: "ARSENAL", league: "premier", pos: "OS", rating: 78 },
+            { name: "Cristhian Mosquera", team: "ARSENAL", league: "premier", pos: "DF", rating: 78 },
+            { name: "Ethan Nwaneri", team: "ARSENAL", league: "premier", pos: "OS", rating: 75 },
+            { name: "Reiss Nelson", team: "ARSENAL", league: "premier", pos: "FV", rating: 75 },
+
+            // MANCHESTER CITY
+            { name: "Erling Haaland", team: "MANCHESTER CITY", league: "premier", pos: "FV", rating: 91 },
+            { name: "Gianluigi Donnarumma", team: "MANCHESTER CITY", league: "premier", pos: "KL", rating: 89 },
+            { name: "Rúben Dias", team: "MANCHESTER CITY", league: "premier", pos: "DF", rating: 87 },
+            { name: "Rayan Cherki", team: "MANCHESTER CITY", league: "premier", pos: "FV", rating: 86 },
+            { name: "Joško Gvardiol", team: "MANCHESTER CITY", league: "premier", pos: "DF", rating: 85 },
+            { name: "Antoine Semenyo", team: "MANCHESTER CITY", league: "premier", pos: "FV", rating: 85 },
+            { name: "Marc Guéhi", team: "MANCHESTER CITY", league: "premier", pos: "DF", rating: 85 },
+            { name: "Elliot Anderson", team: "MANCHESTER CITY", league: "premier", pos: "OS", rating: 84 },
+            { name: "Jérémy Doku", team: "MANCHESTER CITY", league: "premier", pos: "FV", rating: 84 },
+            { name: "Phil Foden", team: "MANCHESTER CITY", league: "premier", pos: "OS", rating: 84 },
+            { name: "Tijjani Reijnders", team: "MANCHESTER CITY", league: "premier", pos: "OS", rating: 84 },
+            { name: "Matheus Nunes", team: "MANCHESTER CITY", league: "premier", pos: "OS", rating: 83 },
+            { name: "Nico O'Reilly", team: "MANCHESTER CITY", league: "premier", pos: "OS", rating: 83 },
+            { name: "Jack Grealish", team: "MANCHESTER CITY", league: "premier", pos: "FV", rating: 82 },
+            { name: "Omar Marmoush", team: "MANCHESTER CITY", league: "premier", pos: "FV", rating: 82 },
+            { name: "Abdukodir Khusanov", team: "MANCHESTER CITY", league: "premier", pos: "DF", rating: 82 },
+            { name: "Nico González", team: "MANCHESTER CITY", league: "premier", pos: "OS", rating: 81 },
+            { name: "Rayan Aït-Nouri", team: "MANCHESTER CITY", league: "premier", pos: "DF", rating: 81 },
+            { name: "Mateo Kovačić", team: "MANCHESTER CITY", league: "premier", pos: "OS", rating: 81 },
+            { name: "Gerónimo Rulli", team: "MANCHESTER CITY", league: "premier", pos: "KL", rating: 80 },
+            { name: "Savinho", team: "MANCHESTER CITY", league: "premier", pos: "FV", rating: 80 },
+            { name: "Rico Lewis", team: "MANCHESTER CITY", league: "premier", pos: "DF", rating: 77 },
+
+            // LIVERPOOL
+            { name: "Virgil van Dijk", team: "LIVERPOOL", league: "premier", pos: "DF", rating: 88 },
+            { name: "Alisson", team: "LIVERPOOL", league: "premier", pos: "KL", rating: 87 },
+            { name: "Dominik Szoboszlai", team: "LIVERPOOL", league: "premier", pos: "OS", rating: 86 },
+            { name: "Alexander Isak", team: "LIVERPOOL", league: "premier", pos: "FV", rating: 86 },
+            { name: "Florian Wirtz", team: "LIVERPOOL", league: "premier", pos: "FV", rating: 86 },
+            { name: "Ryan Gravenberch", team: "LIVERPOOL", league: "premier", pos: "OS", rating: 85 },
+            { name: "Hugo Ekitiké", team: "LIVERPOOL", league: "premier", pos: "FV", rating: 85 },
+            { name: "Alexis Mac Allister", team: "LIVERPOOL", league: "premier", pos: "OS", rating: 84 },
+            { name: "Giorgi Mamardashvili", team: "LIVERPOOL", league: "premier", pos: "KL", rating: 83 },
+            { name: "Cody Gakpo", team: "LIVERPOOL", league: "premier", pos: "FV", rating: 82 },
+            { name: "Milos Kerkez", team: "LIVERPOOL", league: "premier", pos: "DF", rating: 81 },
+            { name: "Jeremie Frimpong", team: "LIVERPOOL", league: "premier", pos: "DF", rating: 81 },
+            { name: "Federico Chiesa", team: "LIVERPOOL", league: "premier", pos: "FV", rating: 80 },
+            { name: "Curtis Jones", team: "LIVERPOOL", league: "premier", pos: "OS", rating: 80 },
+            { name: "Conor Bradley", team: "LIVERPOOL", league: "premier", pos: "DF", rating: 79 },
+            { name: "Joe Gomez", team: "LIVERPOOL", league: "premier", pos: "DF", rating: 79 },
+            { name: "Víctor Muñoz", team: "LIVERPOOL", league: "premier", pos: "FV", rating: 79 },
+            { name: "Wataru Endo", team: "LIVERPOOL", league: "premier", pos: "OS", rating: 78 },
+            { name: "Harvey Elliott", team: "LIVERPOOL", league: "premier", pos: "OS", rating: 77 },
+            { name: "Jérémy Jacquet", team: "LIVERPOOL", league: "premier", pos: "DF", rating: 77 },
+            { name: "Kostas Tsimikas", team: "LIVERPOOL", league: "premier", pos: "DF", rating: 76 },
+
+            // CHELSEA
+            { name: "Moisés Caicedo", team: "CHELSEA", league: "premier", pos: "OS", rating: 86 },
+            { name: "Enzo Fernández", team: "CHELSEA", league: "premier", pos: "OS", rating: 86 },
+            { name: "Cole Palmer", team: "CHELSEA", league: "premier", pos: "OS", rating: 85 },
+            { name: "Reece James", team: "CHELSEA", league: "premier", pos: "DF", rating: 84 },
+            { name: "Morgan Rogers", team: "CHELSEA", league: "premier", pos: "OS", rating: 84 },
+            { name: "João Pedro", team: "CHELSEA", league: "premier", pos: "FV", rating: 83 },
+            { name: "Maxence Lacroix", team: "CHELSEA", league: "premier", pos: "DF", rating: 82 },
+            { name: "Pedro Neto", team: "CHELSEA", league: "premier", pos: "FV", rating: 81 },
+            { name: "Robert Sánchez", team: "CHELSEA", league: "premier", pos: "KL", rating: 80 },
+            { name: "Estêvão Willian", team: "CHELSEA", league: "premier", pos: "FV", rating: 80 },
+            { name: "Levi Colwill", team: "CHELSEA", league: "premier", pos: "DF", rating: 80 },
+            { name: "Danny Welbeck", team: "CHELSEA", league: "premier", pos: "FV", rating: 80 },
+            { name: "Pep Chavarría", team: "CHELSEA", league: "premier", pos: "DF", rating: 79 },
+            { name: "Wesley Fofana", team: "CHELSEA", league: "premier", pos: "DF", rating: 79 },
+            { name: "Nicolas Jackson", team: "CHELSEA", league: "premier", pos: "FV", rating: 79 },
+            { name: "Malo Gusto", team: "CHELSEA", league: "premier", pos: "DF", rating: 79 },
+            { name: "Valentín Barco", team: "CHELSEA", league: "premier", pos: "DF", rating: 79 },
+            { name: "Jordan Henderson", team: "CHELSEA", league: "premier", pos: "OS", rating: 78 },
+            { name: "Emanuel Emegha", team: "CHELSEA", league: "premier", pos: "FV", rating: 78 },
+            { name: "Roméo Lavia", team: "CHELSEA", league: "premier", pos: "OS", rating: 78 },
+            { name: "Mike Penders", team: "CHELSEA", league: "premier", pos: "KL", rating: 78 },
+            { name: "Jorrel Hato", team: "CHELSEA", league: "premier", pos: "DF", rating: 78 },
+            { name: "Marco Palestra", team: "CHELSEA", league: "premier", pos: "DF", rating: 78 },
+            { name: "Tosin Adarabioyo", team: "CHELSEA", league: "premier", pos: "DF", rating: 77 },
+            { name: "Liam Delap", team: "CHELSEA", league: "premier", pos: "FV", rating: 77 },
+            { name: "Axel Disasi", team: "CHELSEA", league: "premier", pos: "DF", rating: 77 },
+            { name: "Jamie Gittens", team: "CHELSEA", league: "premier", pos: "FV", rating: 77 },
+            { name: "Mamadou Sarr", team: "CHELSEA", league: "premier", pos: "DF", rating: 77 },
+
+            // MANCHESTER UNITED
+            { name: "Bruno Fernandes", team: "MANCHESTER UNITED", league: "premier", pos: "OS", rating: 89 },
+            { name: "Youri Tielemans", team: "MANCHESTER UNITED", league: "premier", pos: "OS", rating: 85 },
+            { name: "Bryan Mbeumo", team: "MANCHESTER UNITED", league: "premier", pos: "FV", rating: 84 },
+            { name: "Matheus Cunha", team: "MANCHESTER UNITED", league: "premier", pos: "FV", rating: 84 },
+            { name: "Senne Lammens", team: "MANCHESTER UNITED", league: "premier", pos: "KL", rating: 82 },
+            { name: "Marcus Rashford", team: "MANCHESTER UNITED", league: "premier", pos: "FV", rating: 82 },
+            { name: "Benjamin Šeško", team: "MANCHESTER UNITED", league: "premier", pos: "FV", rating: 82 },
+            { name: "Lisandro Martínez", team: "MANCHESTER UNITED", league: "premier", pos: "DF", rating: 82 },
+            { name: "Matthijs de Ligt", team: "MANCHESTER UNITED", league: "premier", pos: "DF", rating: 82 },
+            { name: "Harry Maguire", team: "MANCHESTER UNITED", league: "premier", pos: "DF", rating: 82 },
+            { name: "Kobbie Mainoo", team: "MANCHESTER UNITED", league: "premier", pos: "OS", rating: 81 },
+            { name: "Noussair Mazraoui", team: "MANCHESTER UNITED", league: "premier", pos: "DF", rating: 80 },
+            { name: "Andrey Santos", team: "MANCHESTER UNITED", league: "premier", pos: "OS", rating: 80 },
+            { name: "Luke Shaw", team: "MANCHESTER UNITED", league: "premier", pos: "DF", rating: 79 },
+            { name: "Amad", team: "MANCHESTER UNITED", league: "premier", pos: "FV", rating: 79 },
+            { name: "Patrick Dorgu", team: "MANCHESTER UNITED", league: "premier", pos: "DF", rating: 78 },
+            { name: "Diogo Dalot", team: "MANCHESTER UNITED", league: "premier", pos: "DF", rating: 78 },
+            { name: "Mason Mount", team: "MANCHESTER UNITED", league: "premier", pos: "OS", rating: 78 },
+            { name: "Leny Yoro", team: "MANCHESTER UNITED", league: "premier", pos: "DF", rating: 78 },
+            { name: "Manuel Ugarte", team: "MANCHESTER UNITED", league: "premier", pos: "OS", rating: 77 },
+            { name: "Joshua Zirkzee", team: "MANCHESTER UNITED", league: "premier", pos: "FV", rating: 77 },
+
+            // FENERBAHÇE
+            { name: "N'Golo Kanté", team: "FENERBAHÇE", league: "superlig", pos: "OS", rating: 83 },
+            { name: "Mason Greenwood", team: "FENERBAHÇE", league: "superlig", pos: "FV", rating: 83 },
+            { name: "Ederson", team: "FENERBAHÇE", league: "superlig", pos: "OS", rating: 82 },
+            { name: "Romelu Lukaku", team: "FENERBAHÇE", league: "superlig", pos: "FV", rating: 82 },
+            { name: "Marco Asensio", team: "FENERBAHÇE", league: "superlig", pos: "FV", rating: 82 },
+            { name: "Mattéo Guendouzi", team: "FENERBAHÇE", league: "superlig", pos: "OS", rating: 81 },
+            { name: "Vedat Muriqi", team: "FENERBAHÇE", league: "superlig", pos: "FV", rating: 81 },
+            { name: "Milan Škriniar", team: "FENERBAHÇE", league: "superlig", pos: "DF", rating: 81 },
+            { name: "Nathan Aké", team: "FENERBAHÇE", league: "superlig", pos: "DF", rating: 80 },
+            { name: "Kerem Aktürkoğlu", team: "FENERBAHÇE", league: "superlig", pos: "FV", rating: 79 },
+            { name: "Nélson Semedo", team: "FENERBAHÇE", league: "superlig", pos: "DF", rating: 77 },
+            { name: "İsmail Yüksek", team: "FENERBAHÇE", league: "superlig", pos: "OS", rating: 77 },
+            { name: "Jayden Oosterwolde", team: "FENERBAHÇE", league: "superlig", pos: "DF", rating: 76 },
+            { name: "Dorgeles Nene", team: "FENERBAHÇE", league: "superlig", pos: "FV", rating: 75 },
+            { name: "Oğuz Aydın", team: "FENERBAHÇE", league: "superlig", pos: "FV", rating: 74 },
+            { name: "İrfan Can Kahveci", team: "FENERBAHÇE", league: "superlig", pos: "OS", rating: 74 },
+            { name: "Archie Brown", team: "FENERBAHÇE", league: "superlig", pos: "DF", rating: 73 },
+            { name: "Mert Günok", team: "FENERBAHÇE", league: "superlig", pos: "KL", rating: 73 },
+            { name: "Levent Mercan", team: "FENERBAHÇE", league: "superlig", pos: "DF", rating: 73 },
+            { name: "Mert Müldür", team: "FENERBAHÇE", league: "superlig", pos: "DF", rating: 73 },
+
+            // BEŞİKTAŞ
+            { name: "Orkun Kökçü", team: "BEŞİKTAŞ", league: "superlig", pos: "OS", rating: 82 },
+            { name: "Leandro Trossard", team: "BEŞİKTAŞ", league: "superlig", pos: "FV", rating: 82 },
+            { name: "Dušan Vlahović", team: "BEŞİKTAŞ", league: "superlig", pos: "FV", rating: 81 },
+            { name: "Alexander Nübel", team: "BEŞİKTAŞ", league: "superlig", pos: "KL", rating: 80 },
+            { name: "Emmanuel Agbadou", team: "BEŞİKTAŞ", league: "superlig", pos: "DF", rating: 77 },
+            { name: "Václav Černý", team: "BEŞİKTAŞ", league: "superlig", pos: "FV", rating: 77 },
+            { name: "Wilfred Ndidi", team: "BEŞİKTAŞ", league: "superlig", pos: "OS", rating: 75 },
+            { name: "Oh Hyeon Gyu", team: "BEŞİKTAŞ", league: "superlig", pos: "FV", rating: 75 },
+            { name: "Milot Rashica", team: "BEŞİKTAŞ", league: "superlig", pos: "FV", rating: 74 },
+            { name: "Amir Murillo", team: "BEŞİKTAŞ", league: "superlig", pos: "DF", rating: 74 },
+            { name: "João Mário", team: "BEŞİKTAŞ", league: "superlig", pos: "FV", rating: 74 },
+            { name: "Salih Özcan", team: "BEŞİKTAŞ", league: "superlig", pos: "OS", rating: 74 },
+            { name: "Ali Al Musrati", team: "BEŞİKTAŞ", league: "superlig", pos: "OS", rating: 74 },
+            { name: "Tiago Djaló", team: "BEŞİKTAŞ", league: "superlig", pos: "DF", rating: 74 },
+            { name: "Emirhan Topçu", team: "BEŞİKTAŞ", league: "superlig", pos: "DF", rating: 74 },
+            { name: "Felix Uduokhai", team: "BEŞİKTAŞ", league: "superlig", pos: "DF", rating: 74 },
+            { name: "Semih Kılıçsoy", team: "BEŞİKTAŞ", league: "superlig", pos: "FV", rating: 73 },
+            { name: "Rıdvan Yılmaz", team: "BEŞİKTAŞ", league: "superlig", pos: "DF", rating: 72 },
+            { name: "Kassoum Ouattara", team: "BEŞİKTAŞ", league: "superlig", pos: "DF", rating: 72 },
+            { name: "Junior Olaitan", team: "BEŞİKTAŞ", league: "superlig", pos: "FV", rating: 71 },
+
+            // GALATASARAY
+            { name: "Victor Osimhen", team: "GALATASARAY", league: "superlig", pos: "FV", rating: 85 },
+            { name: "Rafael Leão", team: "GALATASARAY", league: "superlig", pos: "FV", rating: 83 },
+            { name: "Lucas Torreira", team: "GALATASARAY", league: "superlig", pos: "OS", rating: 81 },
+            { name: "Barış Alper Yılmaz", team: "GALATASARAY", league: "superlig", pos: "FV", rating: 80 },
+            { name: "Gabriel Sara", team: "GALATASARAY", league: "superlig", pos: "OS", rating: 80 },
+            { name: "Uğurcan Çakır", team: "GALATASARAY", league: "superlig", pos: "KL", rating: 80 },
+            { name: "Davinson Sánchez", team: "GALATASARAY", league: "superlig", pos: "DF", rating: 80 },
+            { name: "Leroy Sané", team: "GALATASARAY", league: "superlig", pos: "FV", rating: 80 },
+            { name: "Yunus Akgün", team: "GALATASARAY", league: "superlig", pos: "FV", rating: 79 },
+            { name: "Abdülkerim Bardakcı", team: "GALATASARAY", league: "superlig", pos: "DF", rating: 79 },
+            { name: "Mario Lemina", team: "GALATASARAY", league: "superlig", pos: "OS", rating: 78 },
+            { name: "Roland Sallai", team: "GALATASARAY", league: "superlig", pos: "FV", rating: 78 },
+            { name: "Wilfried Singo", team: "GALATASARAY", league: "superlig", pos: "DF", rating: 78 },
+            { name: "İlkay Gündoğan", team: "GALATASARAY", league: "superlig", pos: "OS", rating: 78 },
+            { name: "Lesley Ugochukwu", team: "GALATASARAY", league: "superlig", pos: "OS", rating: 76 },
+            { name: "Eren Elmalı", team: "GALATASARAY", league: "superlig", pos: "DF", rating: 75 },
+            { name: "Ismail Jakobs", team: "GALATASARAY", league: "superlig", pos: "DF", rating: 75 },
+            { name: "El Chadaille Bitshiabu", team: "GALATASARAY", league: "superlig", pos: "DF", rating: 75 },
+            { name: "Victor Nelsson", team: "GALATASARAY", league: "superlig", pos: "DF", rating: 74 },
+            { name: "Kaan Ayhan", team: "GALATASARAY", league: "superlig", pos: "DF", rating: 73 },
+            { name: "Günay Güvenç", team: "GALATASARAY", league: "superlig", pos: "KL", rating: 72 },
+            { name: "Deniz Gül", team: "GALATASARAY", league: "superlig", pos: "FV", rating: 72 },
+
+            // TRABZONSPOR
+            { name: "Mohamed Salah", team: "TRABZONSPOR", league: "superlig", pos: "FV", rating: 87 },
+            { name: "Fabinho", team: "TRABZONSPOR", league: "superlig", pos: "OS", rating: 82 },
+            { name: "André Onana", team: "TRABZONSPOR", league: "superlig", pos: "KL", rating: 78 },
+            { name: "Paul Onuachu", team: "TRABZONSPOR", league: "superlig", pos: "FV", rating: 77 },
+            { name: "Aral Şimşir", team: "TRABZONSPOR", league: "superlig", pos: "FV", rating: 76 },
+            { name: "Arseniy Batagov", team: "TRABZONSPOR", league: "superlig", pos: "DF", rating: 76 },
+            { name: "Stefan Savić", team: "TRABZONSPOR", league: "superlig", pos: "DF", rating: 76 },
+            { name: "Ruslan Malinovskyi", team: "TRABZONSPOR", league: "superlig", pos: "OS", rating: 75 },
+            { name: "Batista Mendy", team: "TRABZONSPOR", league: "superlig", pos: "OS", rating: 75 },
+            { name: "Ernest Muçi", team: "TRABZONSPOR", league: "superlig", pos: "FV", rating: 75 },
+            { name: "Ozan Tufan", team: "TRABZONSPOR", league: "superlig", pos: "OS", rating: 72 },
+            { name: "Okay Yokuşlu", team: "TRABZONSPOR", league: "superlig", pos: "OS", rating: 72 },
+            { name: "Mustafa Eskihellaç", team: "TRABZONSPOR", league: "superlig", pos: "FV", rating: 72 },
+            { name: "Wagner Pina", team: "TRABZONSPOR", league: "superlig", pos: "FV", rating: 72 },
+            { name: "Tim Jabol-Folcarelli", team: "TRABZONSPOR", league: "superlig", pos: "OS", rating: 72 },
+            { name: "Cenk Özkacar", team: "TRABZONSPOR", league: "superlig", pos: "DF", rating: 72 },
+            { name: "Chibuike Nwaiwu", team: "TRABZONSPOR", league: "superlig", pos: "DF", rating: 72 },
+            { name: "Samet Akaydın", team: "TRABZONSPOR", league: "superlig", pos: "DF", rating: 72 },
+            { name: "Sidny Cabral", team: "TRABZONSPOR", league: "superlig", pos: "DF", rating: 71 },
+            { name: "John Lundstram", team: "TRABZONSPOR", league: "superlig", pos: "OS", rating: 71 }
+        ];
+
         let gamePool = [], currentPlayers = [], currentPlayerIndex = 0, availableActions = ["oynat", "yedek", "sat"], assignments = {};
 
-        // GELİŞMİŞ WİKİPEDİA ARAMA (Doğrudan Başlık arar, resim bulma şansı %95)
         async function fetchPlayerImage(playerName) {
             try {
-                let url = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(playerName + " football")}&gsrlimit=1&prop=pageimages&pithumbsize=500&format=json&origin=*`;
+                let searchQuery = `"${playerName}" "footballer" OR "soccer"`;
+                let url = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(searchQuery)}&gsrlimit=1&prop=pageimages&pithumbsize=500&format=json&origin=*`;
                 let res = await fetch(url); let data = await res.json();
-                if(data.query?.pages) { let pageId = Object.keys(data.query.pages)[0]; if(data.query.pages[pageId].thumbnail) return data.query.pages[pageId].thumbnail.source; }
+                if(data.query?.pages) { 
+                    let pageId = Object.keys(data.query.pages)[0]; 
+                    if(data.query.pages[pageId].thumbnail) return data.query.pages[pageId].thumbnail.source; 
+                }
                 
-                let url2 = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(playerName)}&gsrlimit=1&prop=pageimages&pithumbsize=500&format=json&origin=*`;
-                let res2 = await fetch(url2); let data2 = await res2.json();
-                if(data2.query?.pages) { let pageId = Object.keys(data2.query.pages)[0]; if(data2.query.pages[pageId].thumbnail) return data2.query.pages[pageId].thumbnail.source; }
+                let fallbackUrl = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(playerName)}&gsrlimit=1&prop=pageimages&pithumbsize=500&format=json&origin=*`;
+                let res2 = await fetch(fallbackUrl); let data2 = await res2.json();
+                if(data2.query?.pages) { 
+                    let pageId = Object.keys(data2.query.pages)[0]; 
+                    if(data2.query.pages[pageId].thumbnail) return data2.query.pages[pageId].thumbnail.source; 
+                }
                 throw new Error("Resim yok");
             } catch (e) {
-                return `https://ui-avatars.com/api/?name=${encodeURIComponent(playerName)}&background=18181b&color=fff&size=500&bold=true&font-size=0.33`;
+                return `https://ui-avatars.com/api/?name=${encodeURIComponent(playerName)}&background=334155&color=fff&size=500&bold=true&font-size=0.33`;
             }
         }
 
@@ -1717,10 +1011,7 @@ Yunus Emre Çift
             
             if(filteredDB.length < 3) { alert("Seçtiğin filtrelerde yeterli oyuncu yok! Lütfen filtreleri genişlet."); showScreen('settings-screen'); return; }
 
-            // LİG KARIŞMA BUG'I FİX: Havuzdaki eski filtreleri anında siler
-            gamePool = gamePool.filter(p => checkedLeagues.includes(p.league) && checkedPos.includes(p.pos));
-
-            if(gamePool.length < 3) { gamePool = shuffleArray(filteredDB); }
+            gamePool = shuffleArray(filteredDB);
 
             currentPlayers = [gamePool.pop(), gamePool.pop(), gamePool.pop()];
             currentPlayerIndex = 0; availableActions = ["oynat", "yedek", "sat"]; assignments = {};
@@ -1741,14 +1032,31 @@ Yunus Emre Çift
 
             let player = currentPlayers[currentPlayerIndex];
             let leagueData = LEAGUE_META[player.league];
+            let logoUrl = TEAM_LOGOS[player.team] || FALLBACK_LOGOS[player.team] || "https://ui-avatars.com/api/?name=" + encodeURIComponent(player.team);
             
             document.getElementById('player-image').src = await fetchPlayerImage(player.name);
             document.getElementById('player-name').innerText = player.name;
             document.getElementById('player-team').innerText = player.team;
             
+            let logoImgEl = document.getElementById('player-team-logo');
+            let bgLogoEl = document.getElementById('card-bg-logo');
+            logoImgEl.alt = player.team;
+            bgLogoEl.alt = player.team;
+            
+            bgLogoEl.style.display = 'block';
+            logoImgEl.src = logoUrl;
+            bgLogoEl.src = logoUrl;
+            
             let ratingBadge = document.getElementById('player-rating');
-            if(isHardMode) { ratingBadge.innerText = "Reyting: ??"; ratingBadge.style.background = "#52525b"; } 
-            else { ratingBadge.innerText = "Reyting: " + player.rating; ratingBadge.style.background = "var(--accent)"; }
+            if(isHardMode) { 
+                ratingBadge.innerText = "Reyting: ??"; 
+                ratingBadge.style.background = "#64748b";
+                ratingBadge.style.color = "#ffffff";
+            } else { 
+                ratingBadge.innerText = "Reyting: " + player.rating; 
+                ratingBadge.style.background = "var(--accent)"; 
+                ratingBadge.style.color = "#0f172a";
+            }
             
             let posEl = document.getElementById('player-pos');
             posEl.innerText = player.pos; posEl.className = "pos-badge pos-" + player.pos;
@@ -1764,15 +1072,16 @@ Yunus Emre Çift
                     btns.style.display = 'none'; lastArea.style.display = 'flex';
                     let actText = availableActions[0] === 'oynat' ? 'İLK 11\'E YERLEŞTİ' : (availableActions[0] === 'yedek' ? 'YEDEK BIRAKILDI' : 'TRANSFER EDİLDİ');
                     let actColor = availableActions[0] === 'oynat' ? 'var(--play-color)' : (availableActions[0] === 'yedek' ? 'var(--bench-color)' : 'var(--sell-color)');
+                    let actTextColor = availableActions[0] === 'sat' ? '#ffffff' : '#000000';
                     let dbadge = document.getElementById('last-action-display');
-                    dbadge.innerText = actText; dbadge.style.backgroundColor = actColor; dbadge.style.borderColor = actColor;
+                    dbadge.innerText = actText; dbadge.style.backgroundColor = actColor; dbadge.style.borderColor = actColor; dbadge.style.color = actTextColor;
                 } else {
                     btns.style.pointerEvents = 'auto'; btns.style.opacity = '1';
                     document.getElementById('btn-oynat').style.display = availableActions.includes('oynat') ? 'flex' : 'none';
                     document.getElementById('btn-yedek').style.display = availableActions.includes('yedek') ? 'flex' : 'none';
                     document.getElementById('btn-sat').style.display = availableActions.includes('sat') ? 'flex' : 'none';
                 }
-            }, 300);
+            }, 250);
         }
 
         async function selectAction(action) {
@@ -1798,25 +1107,34 @@ Yunus Emre Çift
 
             for (let act of ["oynat", "yedek", "sat"]) {
                 let p = assignments[act], points = actD[act].calc(p.rating); totalScore += points;
+                let logoUrl = TEAM_LOGOS[p.team] || FALLBACK_LOGOS[p.team] || "";
                 resultsHtml += `
                     <div class="result-item">
                         <div class="result-player-info">
-                            <img src="${p.loadedImg}">
+                            <img class="res-player-img" src="${p.loadedImg}">
                             <div style="overflow: hidden; width: 100%;">
-                                <strong style="display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; font-size: 13px;">${p.name}</strong> 
-                                <span class="pos-badge pos-${p.pos}" style="font-size:9px;">${p.pos}</span><br>
-                                <span style="font-size:11px; color:var(--text-muted); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">${p.team} - R: ${p.rating}</span>
+                                <strong style="display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; font-size: 12px;">${p.name}</strong> 
+                                <span style="font-size:10px; color:var(--text-muted); display: flex; align-items: center; gap: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; margin-top:2px;">
+                                    <img class="res-team-logo" src="${logoUrl}" referrerpolicy="no-referrer" onerror="handleImgError(this)" alt="${p.team}"> ${p.team} <span class="pos-badge pos-${p.pos}" style="font-size:8px;">${p.pos}</span> R: ${p.rating}
+                                </span>
                             </div>
                         </div>
-                        <div style="text-align: right; flex-shrink: 0; min-width: 60px;">
+                        <div style="text-align: right; flex-shrink: 0; min-width: 55px;">
                             <span class="badge ${actD[act].badge}">${actD[act].label}</span><br>
-                            <strong style="color:var(--play-color); font-size:14px;">+${points}</strong>
+                            <strong style="color:var(--green); font-size:13px; display:inline-block; margin-top:2px;">+${points}</strong>
                         </div>
                     </div>`;
             }
             document.getElementById('results-list').innerHTML = resultsHtml;
-            document.getElementById('total-score').innerText = totalScore;
+            
+            const scoreEl = document.getElementById('total-score');
+            scoreEl.innerText = totalScore;
+            scoreEl.classList.remove('score-fadeIn');
+            void scoreEl.offsetWidth;
+            scoreEl.classList.add('score-fadeIn');
+
             saveToHistory(totalScore);
+            updateHighScoreDisplay();
         }
 
         function saveToHistory(score) {
@@ -1829,16 +1147,20 @@ Yunus Emre Çift
         function loadHistory() {
             let hist = JSON.parse(localStorage.getItem('fks_history')) || [];
             let list = document.getElementById('history-list');
-            if(hist.length === 0) { list.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:20px;">Henüz maç oynamadın.</p>'; return; }
+            if(hist.length === 0) { list.innerHTML = '<p style="text-align:center; color:var(--text-muted); margin-top:20px; font-size:13px;">Henüz maç oynamadın.</p>'; return; }
             list.innerHTML = hist.map(m => `
-                <div style="display:flex; justify-content:space-between; margin-bottom:10px; background:rgba(255,255,255,0.03); padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,0.05);">
-                    <div><i class="fa-solid fa-calendar-days" style="color:var(--text-muted);"></i> <span style="font-size:13px;">${m.date}</span></div>
-                    <strong style="color:var(--accent); font-size:14px;">${m.score} Puan</strong>
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px; background:rgba(255,255,255,0.05); padding:10px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.08);">
+                    <div><i class="fa-solid fa-calendar-days" style="color:var(--text-muted);"></i> <span style="font-size:12px;">${m.date}</span></div>
+                    <strong style="color:var(--accent); font-size:13px;">${m.score} Puan</strong>
                 </div>`).join('');
         }
 
         function clearHistory() {
-            if(confirm("Geçmişi silmek istediğine emin misin?")) { localStorage.removeItem('fks_history'); loadHistory(); }
+            if(confirm("Geçmişi silmek istediğine emin misin?")) { 
+                localStorage.removeItem('fks_history'); 
+                loadHistory(); 
+                updateHighScoreDisplay();
+            }
         }
     </script>
 </body>
